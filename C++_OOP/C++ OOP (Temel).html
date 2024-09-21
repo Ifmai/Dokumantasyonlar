@@ -1,0 +1,809 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>C++ OOP (Temel)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b6026d8d-1b3a-45f5-906d-a2cfd5382fd0" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 35.68%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="C++%20OOP%20(Temel)%20b6026d8d1b3a45f5906da2cfd5382fd0/31b2ii8hchi31.jpg"/></div><h1 class="page-title">C++ OOP (Temel)</h1><p class="page-description"></p></header><div class="page-body"><p id="211b3f55-c7c1-43e2-af8a-29d6652f1fc1" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cd881351-0c71-482e-906b-9fd13b002172"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><em>Başlamadan önce sunu söylemek istiyorum. Bu dökümantasyon ortalama bir yazılım bilgisi olan ancak “OOP nedir?”, “Class ve obje nedir neyin nesidir abi bu OOP” gibi sorulara cevap niteliğinde olacaktır.</em></div></figure><ul id="7dc53c60-f48a-4cc7-a244-92fa5adbaf77" class="toggle"><li><details open=""><summary><em><strong>Bu dökümantasoyunu okumaya başlamadan önce bilmeniz gerekenler</strong></em></summary><ul id="d609a5fd-4aa0-462c-9037-235d465b1da9" class="bulleted-list"><li style="list-style-type:disc">Diziler, Pointerlar, Referans veri tipleri</li></ul><ul id="471b11f6-d87f-4e36-bac3-e78f92a095e8" class="bulleted-list"><li style="list-style-type:disc">Diziler veya Pointer Arrayler kullanmayı</li></ul><ul id="bee8ea86-aa57-4991-9ba3-8db23d3d559d" class="bulleted-list"><li style="list-style-type:disc">Pointer ve Referans Arasında ki Farklar</li></ul><ul id="eecfc0d5-c79d-49ee-ba35-634ebb856015" class="bulleted-list"><li style="list-style-type:disc">Referans Kullanımının Avantajları</li></ul><ul id="d45d4c99-2233-46f0-ae1d-9005d8ee05a5" class="bulleted-list"><li style="list-style-type:disc">Fonksiyon türlerini ve tanımlamaları</li></ul></details></li></ul><p id="5e3d8856-5d83-41d9-a1a5-542f4cfe2e4a" class=""><em>Şimdi OOP’ye girmeden önce C++ dilinde kullanılan “</em><em><strong>namespace</strong></em><em>” adında ki uzay boşluğumuzdan bahsedelim. </em><a href="C++%20OOP%20(Temel)%20b6026d8d1b3a45f5906da2cfd5382fd0/C++%20Page%20DB%206787f893909a4dd384cf35cb2d5ea021/Namespace%2040f15b2c78bc40b29e14000040095c13.html"><em><mark class="highlight-red">Buraya Tıklayarak Gidebilirsin.</mark></em></a></p><p id="c813edff-e146-4540-8ca7-b4ee42cb99b1" class="">
+</p><p id="b2ca5e27-5f10-4211-a6e3-e004ab824795" class="">Dip not : Eğer bu sayfayı daha önce okuduysan sayfanın sonundaki Page Db sayfasından veya <em><mark class="highlight-red"><strong><a href="C++%20OOP%20(Temel)%20b6026d8d1b3a45f5906da2cfd5382fd0/C++%20Page%20DB%206787f893909a4dd384cf35cb2d5ea021.html">şuraya</a></strong></mark></em> tıklayarak diğer alt konulara gidebilirsin. </p><hr id="f1b364bb-44df-4ec9-a80e-50b7089348a7"/><p id="65c1dc16-77eb-4ff2-826d-7f4d4c68f020" class="">
+</p><p id="0c9eefe9-9fde-4d63-98ce-0e1056a69af8" class="">Şimdi OOP’ nedemek?<div class="indented"><ul id="c0d9e469-1e42-4b77-a6bb-a159193ee23c" class="bulleted-list"><li style="list-style-type:disc"> OOP’nin açılımı Object-Oriented Programming (Nesne Tabanlı Programlama) anlamına gelmektedir.</li></ul></div></p><p id="737a441a-a368-4822-933f-624b7aa1807f" class="">Şöyle bir açıklama bulabilirisniz OOP hakkında.</p><blockquote id="1d46bbde-1a32-43ad-8bf0-430a0b09ae89" class="">Yazılım geliştirme için bir programlama paradigmasıdır. OOP&#x27;nin temel amacı, yazılımın organizasyonunu ve tasarımını, gerçek dünyadaki nesnelerin modellenmesine dayandırmaktır &quot;Paradigma,&quot; genel olarak bir teori, model veya örüntü anlamına gelir. (burada model anlamında kullanılmaktadır.)</blockquote><p id="ab4d672b-ac61-4b60-a476-64297b74f893" class="">
+</p><p id="a7bae63e-9ede-465d-a704-02eb9b0a8813" class="">Şimdi OOP’de en çok duycağınız iki adet terim vardır.<div class="indented"><ol type="1" id="f7276fc3-180c-43c0-ad06-4f8e8973ebc2" class="numbered-list" start="1"><li>Nesne (Obje)</li></ol><ol type="1" id="ed13118e-7e5b-4a70-8c91-f4db5b7296c1" class="numbered-list" start="2"><li>Sınıf (Class)</li></ol></div></p><p id="79c4a051-12c0-4112-9009-d833fc0329ad" class="">
+</p><h3 id="1b335833-cdd3-418c-ba87-7e17b41038ac" class="">Nedir bu Nesne ve Sınıf (Class)?</h3><div id="a05e1814-875f-47b7-aed2-35dbd64dfffd" class="column-list"><div id="e8dd0049-1945-46ff-9fce-be88813b755e" style="width:50%" class="column"><h3 id="05bce2f1-81d2-4129-862a-823b2ea399c9" class="">Nesne (Obje) 📦</h3><p id="7f42904d-5512-44c8-a09e-bd9167a9cdcd" class="">Gerçek dünyadaki varlıkların (objelerin) yazılım tarafından temsil edilmesidir. Her nesne, veri (state) ve bu veri üzerinde işlem yapan metodları (behavior) içerir.</p></div><div id="9e71a59c-e08b-4042-b465-8dba5c7aac08" style="width:50%" class="column"><h3 id="77d2b008-a1f5-48c4-b048-71b0fe8ec749" class="">Class (Sınıf) </h3><p id="1eeae021-0375-4102-975f-334e5033f2fa" class="">Sınıflar, nesnelerin tasarım şablonlarıdır. Belirli bir sınıftan oluşturulan nesneler, aynı özelliklere (veri) ve davranışlara (metodlar) sahip olacaktır. Sınıflar, nesnelerin nasıl oluşturulacağını ve nasıl davranacaklarını tanımlar.</p></div></div><p id="2a4f8d61-29eb-4214-88ae-c3614f97fc3f" class="">Yani şimdi bu terimsel açıklamayı şöyle bir örnek verelim hem de class oluşturmayı görelim.</p><p id="299889eb-1184-408f-a7e3-aaf28ffefa7f" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bd27a64a-418c-4c8d-9de8-fad9ae344899" class="code"><code class="language-C++">/* Şimdi bir proje grubu oluşturucağımızı düşünelim ve bu gruba katılmak için
+adayların bulunduğunu düşünelim.
+
+Bu adayların özellikleri ne olur?
+İsim, Yaş, Cinsiyet, Meslek, Uzman oldukları konu.
+
+Bu Adaylar katılmak için mülakata geldiğinde ne yaparlar?
+Kendilerini tanıtırlar, Hangi alanda iyi olduklarını söylerler.
+
+Şimdi Classlar bizim için bir nesnenin şablonları ise nesnenin özellikleri 
+üye değişkenlerimiz olur.
+
+Yaptıkları şey ise üye methodlarımız olur.
+
+Şimdi Class yapımızı oluşturalım */
+
+class Aday {
+	private :
+		std::string isim;
+		int yas;
+		std::string cinsiyet;
+		std::string meslek;
+		std::string uzman_alan;
+	public :
+		Aday(std::string isim, int yas, std::string cinsiyet, std::string meslek, std::string uzman_alan);
+		void kendini_tanit();
+		void uzman_alanin();
+};
+
+//Dip not : Aday methodu ve Private ve Public kısmına takılmayın onları
+//birazcık ileride anlatacağım. Şuan önemli olan ana şablona ve konuya odaklanın :)</code></pre><p id="57e224c6-1130-491d-916a-d05f4e2c7366" class="">Şimdi bu gördüğünüz bizim için örnek bir class (sınıf). Bundan üreteceğimiz bir değişkene nesne diyoruz.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="cad51b22-36b5-4ce8-941e-cc6a66784efd" class="code"><code class="language-C++">int main(){
+	Aday ifmai(&quot;Alp&quot;, 21, &quot;Erkek&quot;, &quot;Yazılım Mühendisi&quot;, &quot;Backend&quot;);
+}
+// Burada ifmai adında Aday Sınıfında bir nesne üretmiş oluruz.</code></pre><p id="a256dc33-42c0-4303-9e08-58d71ee10033" class="">Kısa bir özetle OOP dediğimiz şey aslında budur. Gerçek hayattaki bir nesneyi programlama dilinde modelleme işlemidir.</p><p id="783d0db6-3d47-4754-b261-70da3bd69f2e" class="">
+</p><p id="36af8569-518e-4cfc-806d-e3b8bae80f61" class="">Şimdi Class ve Nesne arasında ki farkı öğrendiğinize göre yukarda kullandığım “private / public”’ anahtar kelimelerinin ne olduğunu ve ne işe yaradıklarını öğrenelim.</p><p id="2a5ea318-9365-486f-ac6a-1e976880c740" class="">
+</p><div id="cb5a1c6c-661d-44cb-9af7-389a5cfafe1f" class="column-list"><div id="54d7a565-e63c-4f37-b10a-2958304f17b4" style="width:33.33333333333333%" class="column"><p id="2ca0f5d9-178c-4004-a101-09135f5a52d5" class="">Private</p><p id="0250ac07-a535-47f3-80a0-a6fe21c6bb9a" class="">
+</p><p id="e3a6429c-f01c-4024-8c38-1acdd7dab717" class="">Private karakteri özel anlamına geliyor. Peki ne işe yarar bu anahtar kelime?</p><p id="88cdafbe-462a-49a4-bec1-b2770167de62" class="">
+</p><p id="a03a7352-d3e7-4908-95c4-77ae4ee9fa25" class="">Bir Class içerisinde Private olarak tanımladığımız her şey dışarıdan ulaşılamaz hale gelir. Sadece class içerisinden ulaşım gerçekleştirilir.</p></div><div id="8c9975f8-9c43-4a54-ac44-419bbe58875e" style="width:33.33333333333333%" class="column"><p id="b185e7e0-075d-4df8-9559-3790f44d401b" class="">Public</p><p id="26481470-3c79-47ce-8ae0-6304a69f71bb" class="">Public ingilizce çevirisi halk olarak geçmekle berber bunu yazılım dilindeki anlamı ise altında bulunan değişkenlerin veya methodların dışardan ulaşılabilir olduğu anlamına gelmektedir.</p></div><div id="bfd8a151-f761-4641-91f1-2de69743c179" style="width:33.33333333333333%" class="column"><p id="43313f62-b93a-41fd-9697-107b5458e2bd" class="">Protected</p><p id="136aaae9-8830-41f9-ae1d-e0511ad14c5c" class="">Sadece tanımını yapacağım çünkü bunu OOP’nin kalıtım miras alma kısmında kullanacağız.</p><p id="44d76ac5-0ee2-45ee-9067-f081e764867c" class="">
+</p><p id="4dbe9211-7c00-4c11-b820-9d4b830fe69e" class="">
+</p><p id="e12c260c-3744-440f-bbd7-a8c630f4d54d" class="">Protected anahtar kelimesi altında tanımlanan şeyler kendinden kalıtım alarak üretilmiş classlar dışında ve kendi içerisinden hariç olmak üzere hiç bir yerden ulaşılamaz olmasıdır.</p></div></div><p id="9c3e1238-b006-4f0a-8f87-8e325e3bdc69" class="">Gelin bunu bir örnekten yola çıkarak anlatalım.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ca3441c-0d69-40e0-bc26-7fdae4314c95" class="code"><code class="language-C++">#include &lt;iostream&gt;
+using namespace std;
+
+class dikdortgen{
+	public:
+		int x;
+		int y;
+		void dikdortgen_alani();
+};
+
+class kare{
+	private:
+		int x;
+	public:
+		void kare_alani();
+};
+
+void kare::kare_alani(){
+	std::cout &lt;&lt; &quot;Kare&#x27;nin alanı :&quot; &lt;&lt; x * x&lt;&lt; &quot;&#x27;dir&quot; &lt;&lt; std::endl;
+}
+
+void dikdortgen::dikdortgen_alani(){
+	std::cout &lt;&lt; &quot;Dikdörtgen&#x27;nin alanı :&quot; &lt;&lt; x * y &lt;&lt; &quot;&#x27;dir&quot; &lt;&lt; std::endl;
+}
+
+int main(){
+	dikdortgen example_dikdortgen;
+	example_dikdortgen.x = 10; // public olduğu için mainden ulaşabiliyorum.
+	example_dikdortgen.y = 20;
+	example_dikdortgen.dikdortgen_alani();
+
+
+	kare example_kare;
+	example_kare.x = 10; 
+// ancak bu kod burada private olana bir değişkene ulaşmaya 
+// çalıştığımdan ötürü hata vericektir.
+	example_kare.kare_alani();
+}</code></pre><p id="0b9ca324-0528-4e1f-8761-b40478a18400" class="">Peki şimdi ben bu nesnenin sadece class içinden ulaşabileceksem niye tanımlıyorum, dışardan kullanamıyorum erişemiyorum tanımlamaktaki amaç ne? sorusunu soruyor olabilirsin. </p><p id="92c0822c-4c77-4d4b-86ce-040491df9da5" class="">
+</p><p id="a93b6501-ab09-4ccb-8b03-566631f99a3f" class=""><strong>Sana bu sorunu şu şekilde cevaplayacağım. </strong></p><div id="1684efe2-4a54-447b-b404-b0a3252d0776" class="column-list"><div id="91d7f8ad-8969-4639-ba7c-c473038bf375" style="width:33.33333333333333%" class="column"><ul id="0ad64510-a98a-4204-a5e3-2e7db5e8d352" class="bulleted-list"><li style="list-style-type:disc"><strong>Gizlilik ve Güvenlik</strong> : Private değişkenler, dış dünyadan gelen müdahalelere karşı koruma sağlar. Bu sayede, bir class&#x27;ın iç mantığı ve verileri, dışarıdaki kod tarafından istenmedik şekillerde değiştirilip bozulmaktan korunur.</li></ul></div><div id="d77e2e91-2b78-4e61-88d1-9c303e54dc5c" style="width:29.166666666666664%" class="column"><ul id="da8b426b-dfd1-48e0-910e-b8995ecc1f3b" class="bulleted-list"><li style="list-style-type:disc"><strong>Kodun Bakımı ve Güncellenmesi : </strong>Eğer bir değişken public veya protected olarak tanımlanmışsa ve bu değişkenle ilgili dışarıda çok sayıda kod varsa, bu değişkenin yapısının değiştirilmesi daha zor olabilir.</li></ul></div><div id="363383dd-cef8-4cd2-b651-502a15f55e37" style="width:37.5%" class="column"><ul id="e15bbcae-0ee0-41cd-9bf5-f5c0c6fc14e6" class="bulleted-list"><li style="list-style-type:disc"><strong>Kodun Anlaşılabilirliği:</strong> Eğer bir değişkenin sadece belirli bir class içinde kullanılması gerekiyorsa, bu değişkeni private yapmak, kodun daha anlaşılabilir olmasına yardımcı olabilir. Bu sayede ekip olarak çalışırken diğer arkadaşların daha rahat kodu okuyup anlayabilirler.</li></ul></div></div><ul id="d8de41d5-1d82-475a-84aa-e99dfaabadbe" class="bulleted-list"><li style="list-style-type:disc"><strong>Encapsulation (Kapsülleme) [Sakin ol aşağıda anlatıyorum hemen altta.]</strong></li></ul><p id="54e7c0a7-cbbb-48b0-9c1e-71e068bc2a86" class="">
+</p><p id="8a23694f-00b9-4497-8803-dd0b8122979d" class="">Şimdi bu nesnelere sınıf haricinde ulaşamadığın için onları kullanamıyor veya değiştiremiyor değilsin. Bunları yine yapabilirsin ancak bu durumda OPP’nin “<strong>Kapsülleme ve Getter &amp; Setter Methodları</strong>” devreye girmekte.</p><ul id="ed741a89-5149-4300-af59-cbd437bb0941" class="toggle"><li><details open=""><summary><strong>Şimdi Kapsülleme Ne demek?</strong></summary><p id="332598c6-a8f5-4b18-80e1-090b9165dec8" class="">Encapsulation, yazılım geliştirmede bir tür &quot;gizleme&quot; işlemidir. Private değişkenler, sanki bir kutu içinde saklanıyormuş gibi düşünülebilir. Bu kutu, sadece o kutuyu oluşturan sınıfın içinden erişilebilen bir şeydir. Yani, bir class içindeki bazı bilgileri sadece o class&#x27;ın kendisinin kullanabilmesi için &quot;private&quot; olarak işaretleriz.</p><p id="65c5266f-d514-4254-89df-92f0029719ca" class="">Örneğin, bir sınıfın içinde bir değişkeni private yapmak, sanki o değişken sadece o sınıfın içindeki işlevlere aitmiş gibi davranmasını sağlar. Bu, başka kodlar o sınıfı kullanırken bu değişkenin iç yapısıyla doğrudan etkileşime girmesini engeller.</p><p id="3ae288a4-3070-4082-8a0d-5c495ef976b7" class="">Bunu bir örnekle düşünelim: Diyelim ki bir araba sınıfımız var ve bu arabada bir hız değişkeni var. Eğer hız değişkenini public yaparsak, dışarıdan herkes doğrudan bu hızı değiştirebilir. Ancak eğer hız değişkenini private yaparsak, sadece arabayı kontrol eden sınıfın içinde bu hıza müdahale edebiliriz. Bu, arabayla ilgili değişiklikler yaparken sadece arabanın iç yapısıyla uğraşmamıza ve başka kodları etkilememize izin verir, bu da kodun daha temiz, anlaşılır ve bakımı kolay olmasına yardımcı olur.</p><p id="887caa24-b412-4b9b-8cc7-1a4e96d89c90" class="">Yani, encapsulation aslında &quot;detayları gizleme&quot; felsefesine dayanır ve bu da bir programın daha modüler ve sürdürülebilir olmasına katkıda bulunur.</p></details></li></ul><p id="ba9c0041-9fe2-48d9-b9a9-8aec5b93aae8" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d3854fa0-7184-49e1-bd7d-df619c1e14e9" class="code"><code class="language-C++">// Yukarıda Private Değeri olana bir kare class&#x27;ım vardı.
+// Şimdi o class&#x27;ı alalım ve gettter &amp; setter methodlarını yazalım.
+#include &lt;iostream&gt;
+using namespace std;
+
+class Kare{
+	private:
+		int x;
+	public:
+		void kare_alani();
+		int get_x();
+		void set_x(int new_x);
+};
+
+int Kare::get_x(){
+	return this-&gt;x;
+}
+
+void Kare::set_x(int new_x){
+	this-&gt;x = new_x;
+}
+
+// Şimdi o private değişkenlerimize class üzerinden ulaşmış set ve get
+// işlemlerimizi yapmış olduk.
+
+// Hadi gel main&#x27;de nasıl kullanıyoruz görelim.
+
+int main(){
+	Kare a;
+	
+	a.set_x(10); // a nesnesi üzerinden set methodumuz ile x&#x27;in değerini 10 olarak
+	// değiştirdik.
+	cout &lt;&lt; &quot;a adında ki karenin x değeri : &quot; &lt;&lt; a.get_x() &lt;&lt; endl;
+	// Burada da a nesnesi üzerinden get methodumuz ile x değerini öğrendik
+	// ve ekrana yazdırdık.
+}</code></pre><p id="4cc0f3da-ed7c-45fe-8e3e-99ac9b05aca8" class="">
+</p><blockquote id="8458415d-80d5-42c3-8121-9ae62e19ca00" class="">Dip Not : Bazen bazı değişkenlerimizi class’için de oluşturduğumuz gibi değerlerini atarız ve sadece “Get” methodumuzu yazarız. Güvenlik ve kısıtlama yapmak isticeğimiz bazı zamanlarda “Set” methodunu es geçildiğini görebilirsiniz.</blockquote><p id="1e5ebadd-8648-4557-a778-df19cfdff901" class="">
+</p><p id="f0d864a4-965c-44fd-8ce0-dcd6bb466bd0" class="">Şimdi buraya kadar neler öğrendik?</p><ul id="ecd8ed80-77bc-4667-8f12-2741fd71dfd3" class="bulleted-list"><li style="list-style-type:disc">OOP’nin ne olduğunu ve tanımını anladık.</li></ul><ul id="06a59d2b-f15a-444d-8398-0a6fa40350e7" class="bulleted-list"><li style="list-style-type:disc">Nesne ve Sınıf arasında ki farkı gördük.</li></ul><ul id="fc3d888d-7241-4f27-ae33-029de006561d" class="bulleted-list"><li style="list-style-type:disc">Bir class oluşturmayı ve bir classtan nasıl bir nesne oluştururuz.</li></ul><ul id="787d9d48-06a6-4145-bca1-e7784bea6fa6" class="bulleted-list"><li style="list-style-type:disc">Method tanımları ve nasıl başka bir c dosyasında tanımlayabiileceğimizi gördük.</li></ul><ul id="32d7660d-54b8-45bc-ba24-ebf486d206c0" class="bulleted-list"><li style="list-style-type:disc">Kapsülleme nedir? Neden kapsülleme yaparız? gibi soruların cevaplarını aldık.</li></ul><ul id="91ac3dfa-1777-4165-acc2-4c8d20d6f76a" class="bulleted-list"><li style="list-style-type:disc">Obje üzerinden sınıfa ulaşmayı öğrendik.</li></ul><p id="c2a1320a-b866-4e63-b212-72abc88810e9" class="">
+</p><p id="81383c25-c287-49f7-98ed-d9a94c7a6e0a" class="">Özetle temel seviyede Class ve nesneler ile nasıl basit şeyler yapabileceğimi gördük. </p><p id="acfb8ad9-d277-483f-9760-06a1171b968d" class="">
+</p><p id="1d21fb6e-9cf7-44a2-bfc7-390650420c91" class="">Şimdi basit temel kısmı bitirdik. Burayı tamamen anladıysan bir sonraki kısma geçebiliriz. 😊</p><ul id="6f537044-8e20-44c1-bc01-e1d6084cd115" class="toggle"><li><details open=""><summary><em><strong>C++ OPP Database</strong></em></summary><figure id="6787f893-909a-4dd3-84cf-35cb2d5ea021" class="link-to-page"><a href="C++%20OOP%20(Temel)%20b6026d8d1b3a45f5906da2cfd5382fd0/C++%20Page%20DB%206787f893909a4dd384cf35cb2d5ea021.html"><span class="icon">📦</span>C++ Page DB</a></figure></details></li></ul><p id="1b5cce07-a1d9-4049-b6ed-f62ef23f1e59" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

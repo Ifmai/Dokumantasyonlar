@@ -1,0 +1,1002 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>C++ OOP Solid Class Tanımı</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="aa6959d5-2029-4c04-95a7-51ed33c7687c" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1632910138458-5bf601f3835e?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 25.11%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="C++%20OOP%20Solid%20Class%20Tan%C4%B1m%C4%B1%20aa6959d520294c0495a751ed33c7687c/31b2ii8hchi31.jpg"/></div><h1 class="page-title">C++ OOP Solid Class Tanımı</h1><p class="page-description"></p></header><div class="page-body"><blockquote id="9e010d53-c913-4bf3-b724-bb954d3179b9" class=""><em>Şimdi ilk temel kısmımızda OOP nedir, class nedir, nesne nedir, nasıl tanımlama yaparız gibi temellerimizi öğrendik. Şimdi burada Kurucu Methodlar (constructor), Yıkıcı Methodlar (destructor), vb. bunları göreceğiz.</em></blockquote><p id="665a64dd-a1ff-4c15-940d-9d958bea2ef4" class="">
+</p><hr id="eac28f08-638b-4af1-a5d1-e3c69a2ba827"/><p id="a9dc5986-6c8d-4f8e-bbbd-15470cf76466" class="">
+</p><p id="4086b079-7565-4d13-8c35-9d48b6e85f48" class=""><em>Yukarıda ki konuları anlatmadan önce method overloading ( methodun aşırı yüklenmesi) konusunu size anlatmam gerekiyor.</em></p><p id="d0000259-d100-46f2-9fe7-385d0e467e51" class=""><em>Method overloading aynı isimde bir methoddan birden fazla bulunması ancak farklı işlemler yapması durumudur.</em></p><p id="8767db94-b390-4359-b2df-d483c76867de" class=""><em>Örneğin Toplama işlemi yapan bir methodu aşırı yükleme yapalım.</em><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e1caa780-cf43-4c73-a46d-db2b1f306df2" class="code"><code class="language-C++">int topla(int x, int y){
+	return x + y;
+}
+
+int topla(int x, int y, int z){ // 1. Kural Örneği
+	return x + y;
+}
+
+double topla (int x, double y){ // 2. Kural Örneği
+	return x + y;
+}
+
+double topla (double x, int y) { // 3. Kural Örneği
+	return x + y;
+}</code></pre><p id="6d427f53-4542-4811-898a-9b93a3cb05f2" class=""><em>Bunun için şu şekilde basit kurallar vardır.</em></p><ol type="1" id="584b98fe-89ef-4a66-ad92-160716f886f4" class="numbered-list" start="1"><li><em>Paremetre sayı farklı olmalıdır.</em></li></ol><ol type="1" id="e77ec18a-37ad-4078-a384-a2cd5f0acd62" class="numbered-list" start="2"><li><em>Paremetre sayıları aynı ise aldığı parametreler farklı olmalıdır.</em></li></ol><ol type="1" id="8f95b1e7-5511-4f62-9171-e7e886a13e39" class="numbered-list" start="3"><li><em>Paremetre sayısı aynı ve aldığı paremetrelerde aynı ise bu sefer sıraları farklı olmalıdır.</em></li></ol></div></p><p id="feffcd50-7c60-4781-8e9c-123f338a999a" class=""><em>Daha fazla overloading yöntemleri vardır ancak şuan için bu kadarı yeterlidir.</em></p><p id="1f94a1e4-ee68-4718-9f8d-cbb5de94a490" class="">
+</p><hr id="08b64a7c-6680-4858-9139-797c3fa7c268"/><p id="8b88062f-fcf7-4e60-b5b0-7f2b17e880c7" class="">
+</p><p id="06aeafe9-5a50-495b-9bcb-c72d344736d5" class=""><em>Şimdi Solid Class Tanımında genellikle kullanılan bir form var. Bu formun adı “Orthodox Canonical Form” olarak geçkmekte. Bu forma göre oluşturulan her class’ın şu methodlara sahip olması gerekmektedir.</em></p><ul id="adf7e6a7-7cbe-4947-bffa-063e046e47d1" class="bulleted-list"><li style="list-style-type:disc"><em>Bir adet Default Constructor ( Default Yapıcı Method)</em></li></ul><ul id="0fdc1d0f-c938-48c6-b877-5ca66de20622" class="bulleted-list"><li style="list-style-type:disc"><em>Bir adet destructor ( Yıkcı Method)</em></li></ul><ul id="42599186-93dd-481d-9cdc-a6f4c96ed220" class="bulleted-list"><li style="list-style-type:disc"><em>Bir adet Copy Constructor ( Kopya Oluşturucu Method)</em></li></ul><ul id="b7a48db1-3ec9-4ff8-9c07-46716fb6cdbf" class="bulleted-list"><li style="list-style-type:disc"><em>Bir adet assignment operator ( Atama operatörü aşırı yüklemesi)</em></li></ul><p id="5c2dd6f8-b0d1-40b0-97c8-b0e1caaa6ab6" class="">
+</p><p id="36191d45-197e-4e55-a929-44e64244b4b4" class=""><em>Şimdi bunların neler olduğunu ve nasıl yazılacağını görelim.</em></p><ul id="9c609fda-6730-457f-844d-dbb9134eafad" class="toggle"><li><details open=""><summary><em>CONSTRUCTOR</em></summary><p id="a32917af-6686-4a3a-af74-3651cc106faf" class="">İlk başta Constructor (Yapıcı Method) ile başlayalım.</p><ul id="240fcf2a-8bea-43ee-9027-0d5f4989b525" class="toggle"><li><details open=""><summary>Kendisinin adı Class adı ile birebir aynı olmak zorundadır.</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="948f9eab-01c1-454f-bdcf-813db3a61cf6" class="code"><code class="language-C++">class template {
+	private :
+		// class üyeleri...
+	public :
+		template();
+		// diğer methodlar...
+};</code></pre></details></li></ul><ul id="a2914007-b6e1-4603-9365-6067b53e43b9" class="toggle"><li><details open=""><summary>Bir sınıfta birden fazla constructor olabilir. (Farklı paremetrelere sahip olmak şartıyla.)</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="998d8708-2ce9-428f-96ea-8e554886db10" class="code"><code class="language-C++">class template {
+	private :
+		// class üyeleri...
+	public :
+		template();
+		template(int x);
+		template(int x, int y)
+		//template(int x); bir daha yazarsam hata alırım.
+		//Bu işlem aynı zamanda bir
+		//methodun aşırı yüklenmesi (method overloading) olarakta adlandırılır.
+		
+		// diğer methodlar...
+};</code></pre></details></li></ul><ul id="40c41139-9f40-4067-a0f6-af6bd5a45c48" class="bulleted-list"><li style="list-style-type:disc">Bir sınıfın nesnesi oluşturulurken çağrılan özel metodlardır.</li></ul><ul id="0dc58c68-70e7-4721-81f6-c71dee05c530" class="bulleted-list"><li style="list-style-type:disc">Genellikle üye değişkenlere başlangıç değerlerinin atanmasını ve diğer başlangıç işlemlerini gerçekleştirmek için kullanılır</li></ul><ul id="ac4896d9-b369-44f7-bd22-c60f502a6486" class="bulleted-list"><li style="list-style-type:disc">Yapıcı Methotlar ikiye ayrılmaktadır.<ul id="98b62d53-7a7e-4a36-8823-49f017c5649c" class="bulleted-list"><li style="list-style-type:circle">Paremetreli ve Paremetresiz / Yapıcı Method (Constructor) ve  Kurucu Method (Default Constructor) olarak adlandırılırlar.</li></ul></li></ul><p id="597529af-74a9-4ee3-a906-c8519aaad0a1" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c8f1c097-f4e2-4021-9f54-61a926b8ea1c" class="code"><code class="language-C++">// şimdi bir tane yapıcı method örneği görelim.
+#include &lt;iostream&gt;
+using namespace std;
+
+class kare {
+	private:
+		int x;
+	public:
+		kare(); // Default Constructor
+		kare(int x); // Constructor
+		// Nasıl işlemler yapıcaksanız ona göre bir constructor kurabilirsiniz.
+		void set_x(int x);
+		int get_x();
+};
+
+kare::kare(){ // Default Constructor genellikle üyelerin değer tanımları yapılır.
+	this-&gt;x = 0;
+}
+
+kare::kare(int x){ // Burada x değerini kullanıcı veriyor bu sayede istedeği değeri atamış oluyoruz.
+	this-&gt;x = x;
+}
+
+void kare::set_x(int x){
+	this-&gt;x = x;
+}
+
+int kare::get_x(){
+	return this-&gt;x;
+}
+
+int main(){
+	int value = 10;
+
+	kare a;
+	kare b(5);
+	kare c(value);
+
+	cout &lt;&lt; &quot;a Default Constructor X Değeri : &quot; &lt;&lt; a.get_x() &lt;&lt; endl;
+	cout &lt;&lt; &quot;b Default Constructor X Değeri : &quot; &lt;&lt; b.get_x() &lt;&lt; endl;
+	cout &lt;&lt; &quot;c Default Constructor X Değeri : &quot; &lt;&lt; c.get_x() &lt;&lt; endl;
+}</code></pre><p id="bcce11ee-5793-4e4e-a25e-189a783e4932" class="">
+</p><ul id="dd23c932-e9e5-48aa-a7ed-c335ab67a518" class="toggle"><li><details open=""><summary>Şimdi size son olarak dizi halinde bir nesne tanımlarken yapıcı methodu farklı bir şekilde nasıl çağırabileceğimizi gösterceğim.</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b35fa90f-dbc8-4466-9afd-a6251c316599" class="code"><code class="language-C++">#include &lt;iostream&gt;
+using namespace std;
+class dikdortgen{
+	private:
+		int x;
+		int y;
+		std::string name;
+	public:
+		dikdortgen();
+		dikdortgen(int x, int y, std::string name);
+		int get_x();
+		int get_y();
+		//void set_y(int y); (burada kullanmıcağım bu örnekte.)
+		//void set_x(int x);
+};
+
+dikdortgen::dikdortgen(){
+	this-&gt;x = 0;
+	this-&gt;y = 0;
+	this-&gt;name = &quot;&quot;;
+	std::cout &lt;&lt; &quot;Default Constrcutor Çağırıldı&quot; &lt;&lt; std::endl;
+}
+
+dikdortgen::dikdortgen(int x, int y, std::string name){
+	this-&gt;x = x;
+	this-&gt;y = y;
+	this-&gt;name = name;
+
+	std::cout &lt;&lt; &quot;Constructor Çağrıldı &quot; &lt;&lt; this-&gt;name &lt;&lt; &quot; tarafından.&quot; &lt;&lt; std::endl;
+	std::cout &lt;&lt; &quot;Sınıf değerleri:\nx: &quot; &lt;&lt; this-&gt;x &lt;&lt; &quot;\ny: &quot; &lt;&lt; this-&gt;y &lt;&lt; std::endl;
+}
+
+int main(){
+	dikdortgen A;
+	dikdortgen B(5, 10, &quot;B&quot;);
+
+	// bunlar az önce öğrendiğiniz constructor kullanım şekli.
+	dikdortgen C[3];// Burada tamamen default constructor çalışacaktır.
+	dikdortgen D[3] = { dikdortgen(1,2,&quot;D&quot;), dikdortgen(3,5,&quot;D&quot;), dikdortgen(4,5,&quot;D&quot;) };
+	// Bu şekilde D dikdörtgen nesne dizisinin her bir barındığı nesne için 
+	// ikinci yapıcı methodumuz çalışır.
+}</code></pre><p id="b28087fe-9d20-4461-ab2a-6730313194e2" class="">Ekran çıktısı şu şekilde olacaktır.<div class="indented"><blockquote id="8b38ac4c-a513-41a1-9f72-6580d4fb2b4a" class="">Default Constrcutor Çağırıldı<br/>Constructor Çağrıldı B tarafından.<br/>Sınıf değerleri:<br/>x: 5<br/>y: 10<br/>Default Constrcutor Çağırıldı<br/>Default Constrcutor Çağırıldı<br/>Default Constrcutor Çağırıldı<br/>Constructor Çağrıldı D tarafından.<br/>Sınıf değerleri:<br/>x: 1<br/>y: 2<br/>Constructor Çağrıldı D tarafından.<br/>Sınıf değerleri:<br/>x: 3<br/>y: 5<br/>Constructor Çağrıldı D tarafından.<br/>Sınıf değerleri:<br/>x: 4<br/>y: 5<br/></blockquote><p id="ed19e151-6feb-4078-a0bd-75275871c4dd" class="">
+</p></div></p></details></li></ul></details></li></ul><ul id="5a87141f-4f09-4d44-91ef-70b56cd698e6" class="toggle"><li><details open=""><summary>DESTRUCTOR</summary><p id="34c3f462-e29f-4082-8b5c-e8f5f0d96ce2" class="">Destructor (Yıkıcı method),  sınıfların ömrünü sonlandırmak ve sınıfın sahip olduğu kaynakları serbest bırakmak için kullanılan özel bir üye metoddur. Bir sınıfın destructor&#x27;ı, nesnesi bir kapsamdan (scope) çıkarken veya <mark class="highlight-red"><em><strong>“delete”</strong></em></mark> operatörü ile bellekten serbest bırakıldığında otomatik olarak çağrılır.</p><p id="79f20cc9-48bf-4795-9809-9c8dc068d99a" class="">
+</p><p id="c07ad18d-4092-4ed3-a179-da8e2fc15b2d" class="">Destructor tanımlamak için “<mark class="highlight-red"><em><strong>~ (Tilda)classAdı()</strong></em></mark>” şeklinde tanımlanır. Burada “~” işareti bu methodun Destructor olduğunu temsil eder. Constructorların aksine Destructor’lar sadece bir tane olmak zorundadır.  </p><p id="b92a3f7b-d57b-42e8-9be2-2f2f1e09b908" class="">
+</p><p id="ef53c445-3d98-47b2-9bb4-dc4b7e7a36a0" class="">Destructor’ a neden ihtiyacımız vardır?</p><ul id="8d88cd2a-0cce-4061-ab29-12157519f214" class="bulleted-list"><li style="list-style-type:disc">Leaks (sızıntıları) engellemek amacıyla kullanırız. Sınıf içerisinde kullandığımız dinamik bellek adreslerini burada serbest bırakarak hem clean hem okunaklı bir koda sahip olmuş oluruz.</li></ul><ul id="be4596a6-4989-490c-ab7c-55912611e6c0" class="bulleted-list"><li style="list-style-type:disc">Aynı zamanda bu method, sınıfın ömrü sona erdiğinde otomatik olarak gerçekleştiği için bizim manuel bir müdahale etmemize gerek kalmaz.</li></ul><p id="84b957d3-1bd7-4789-a5d2-46097bb7e960" class="">
+</p><p id="be667f4e-4dbc-45b6-9fb8-c07792908d98" class="">Örnek bir Destructor Kullanımı;</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="556ffed0-8d36-4e62-a620-e811f5b3d3ef" class="code"><code class="language-C++">#include &lt;iostream&gt;
+
+class Template {
+private:
+    int* data;
+
+public:
+    // Constructor
+    Template();
+    // Destructor
+    ~Template();
+    void displayData();
+};
+
+Template::Template() {
+	data = new int[5];
+  std::cout &lt;&lt; &quot;Constructor çağrıldı&quot; &lt;&lt; std::endl;
+}
+
+Template::~Template() {
+	delete[] data;  // Dinamik olarak tahsis edilmiş belleği serbest bırak
+  std::cout &lt;&lt; &quot;Destructor çağrıldı&quot; &lt;&lt; std::endl;
+}
+
+void Template::displayData(){
+	for (int i = 0; i &lt; 5; ++i) {
+     std::cout &lt;&lt; data[i] &lt;&lt; &quot; &quot;;
+  }
+  std::cout &lt;&lt; std::endl;
+}
+
+int main() {
+    Template temp1;  // Constructor çağrılır
+    temp1.displayData();   // Sınıfın bir metodunu çağırabiliriz
+    // Programın sonunda obj&#x27;nin ömrü sona erdiği için Destructor çağrılır
+
+	Template *temp2 = new Template; // Pointer Olarak oluşturursak eğer
+	temp2-&gt;displayData();
+	delete temp2; // Kendimiz el ile silmek zorundayız yoksa leaks olarak kalır
+  return 0;
+}</code></pre><blockquote id="49709fd4-f9a0-44d3-9221-8d282fb4c609" class="">Ekran Çıktısı bu şekilde olacaktır.<p id="0bb02b66-189a-4bab-8203-b92a7a5b7461" class="">Constructor çağrıldı<br/>0 0 0 0 0<br/>Constructor çağrıldı<br/>0 0 0 0 0<br/>Destructor çağrıldı // Temp2’nin Destructor’ı<br/>Destructor çağrıldı // Temp1’in Destructor’ı<br/></p><p id="48f21ebb-a28b-4773-be3a-5f7dbd0f1c09" class="">
+</p><p id="bee3ebc8-5619-438a-b660-87c5c74aa564" class="">Temp1’in en son çalışma nedeni pointer olarak tanımlamadığımız için scope bittiğinde otomatik olarak çalışmasıdır.</p></blockquote><p id="c6ec03a5-9d9e-4d4d-8230-4e67050822bb" class="">
+</p><p id="bc25b009-c535-4ce1-aaf1-621b180aebad" class="">Bellekte dinamik bir yer ayırmadıysak ne yapcağız?</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ae07e791-7a38-48fb-bc04-65e5343bf119" class="code"><code class="language-C++">~Template() {
+	std::cout &lt;&lt; &quot;Destructor çağrıldı&quot; &lt;&lt; std::endl;
+}</code></pre></details></li></ul><ul id="5d4997f5-241c-4157-8575-511a9b7d8c97" class="toggle"><li><details open=""><summary><em>COPY CONSTRUCTOR</em></summary><p id="82269b24-975a-448a-af2d-bf98db416d8c" class=""><em>Şimdi </em><em><strong>Copy Constructor  </strong></em><em>bizim hali hazırda oluşturduğumuz olan bir nesnemizi başka bir nesneye kopyalama yapmamızı sağlayan bir methoddur.</em></p><p id="b221426d-c2ef-410d-8ce1-2de28bc3a446" class="">
+</p><p id="a22bafd7-2398-4120-8850-7c6fe6a98a2c" class=""><em><strong>Buna neden ihtiyaç duyuyoruz?</strong></em><div class="indented"><ul id="796143a4-e16a-4f00-85d0-556c8e8a8562" class="bulleted-list"><li style="list-style-type:disc"><em>Copy constructor, genellikle bir sınıftan türetilen bir nesne oluşturulduğunda, bir nesnenin değerlerini başka bir nesneye kopyalamanın nasıl yapılacağını belirlemede kullanılır. Bu işlemi sınıf üstünde bir constructor ile yapmak hem daha güvenli hem okunabilirlik açısından daha iyidir. Bu, özellikle dinamik bellek tahsisi, kaynak yönetimi veya diğer özel durumlar söz konusu olduğunda önemli bir işlemdir.</em></li></ul><ul id="1c8d80ec-e24d-4928-b040-0ab2f5dcb43d" class="bulleted-list"><li style="list-style-type:disc"><em>Bazı durumlarda, C++ derleyicisi tarafından otomatik olarak bir copy constructor oluşturulabilir. Ancak, özel kaynak yönetimi veya özellikle derin kopyalama (Deep Copy) gerektiren durumlarda, programcılar kendi copy constructor&#x27;larını tanımlamayı tercih ederler. </em><em><span style="border-bottom:0.05em solid">Bunun nedeni oluşabilecek bir bellek hatası sorunun önüne geçmektir.</span></em></li></ul></div></p><p id="9913b669-dbfa-4ef1-bdd8-57736f44ef0e" class="">
+</p><p id="dba2a7c8-cca2-400b-8575-a499bdebc333" class=""><em>Şimdi Copy Constructor’ı nasıl yazıcağımızı görelim 🙂</em></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="862bb8e1-2c15-4509-8ebb-d190b36a0e33" class="code"><code class="language-C++">#include &lt;iostream&gt;
+using namespace std;
+
+class Human {
+	private:
+		std::string name;
+		std::string surname;
+		int age;
+	public:
+		Human();
+		Human(std::string name, std::string surname, int age);
+		Human(const Human&amp; copy);
+
+		// get ve set methodlarını ben şimdilik yazmıyorum.
+		// siz kendiniz örnek olarak mainler yazarken 
+		// kendiniz yazıp hem alışmış olursunuz
+		// (Kesinlikle gece gece yazarken üşenmedim :) )
+};
+
+Human::Human() {
+	this-&gt;name = &quot;&quot;;
+	this-&gt;surname = &quot;&quot;;
+	this-&gt;age = 0;
+}
+
+Human::Human(std::string name, std::string surname, int age) {
+	this-&gt;name = name;
+	this-&gt;surname = surname;
+	this-&gt;age = age;
+}
+
+Human::Human(const Human&amp; copy) {
+	//şimdi burası copy constructor&#x27;ımız.
+	//Burada bu işlemi iki şekilde yapabiliriz.
+
+	// Birincisi tüm değişkenleri teker teker eşitleyebiliriz.
+	this-&gt;name = copy.name;
+	this-&gt;surname = copy.surname;
+	this-&gt;age = copy.age;
+
+	// İkincisi ise Assignment Operator kullanarakta yapabiliriz.
+	//*this = copy;
+	// burada işi assigment operator&#x27;e devrederek devam ederiz.
+	// özel bir kopyalamaya ihtiyacımız yoksa.
+}</code></pre><p id="c18e5661-73d8-4bde-b946-bb72bde631d5" class=""><em>Şimdi aklınıza iki soru gelebilir. </em><div class="indented"><ul id="a4b71475-09c8-4b51-a3fb-595997521c4f" class="bulleted-list"><li style="list-style-type:disc"><em>Birincisi neden Copy Constructor ‘da aldığımız nesne “</em><mark class="highlight-red"><em><strong>const</strong></em></mark><em>” alıyoruz?</em><ul id="f7f9c3ce-2777-4727-8687-fc77d1fa116f" class="bulleted-list"><li style="list-style-type:circle"><em>Bunun nedeni kopyalayacağımız nesnenin değerlerinin üyelerinin değiştirebilme olasağını ortadan kaldırmaktır. Çünkü bu kopyalama işleminde isticeğimiz bir şey değildir.</em></li></ul></li></ul><ul id="4dfa8f3b-c8b8-495f-b84e-eac7d42348e1" class="bulleted-list"><li style="list-style-type:disc"><em>İkincisi ise neden “</em><mark class="highlight-red"><em><strong>&amp; (Referans)</strong></em></mark><em>” kullanıyoruz? (</em><strong><em>const </em></strong><mark class="highlight-red"><strong><em>Human&amp;</em></strong></mark><strong><em> copy</em></strong><em>)</em><ul id="31cec245-e0a6-47ff-a153-63b6d04214dd" class="bulleted-list"><li style="list-style-type:circle">Şimdi referans kullanmak yerine pointer kullanabilirdik veya sadece “const Human copy” yazabilirdik. Bunları tercih etmeme nedenimiz tamamen optimizasyondur.</li></ul><ul id="0c179d5f-ee3a-4a30-936b-bfa7293a554e" class="bulleted-list"><li style="list-style-type:circle">Öncelikle referanslar biliyorsunuz ki bellekte ayrı bir yerleri yoktur. Değişkenle aynı yerde küçük bir alan kaplamaktadır. Pointerlar ise bellekte bir adrese sahiptir. Fazladan bir pointer tutmuş oluruz ramde belirli bir süre boyunca. Bu yüzden referans kullanmak pointer kullanmaktan daha verimlidir.</li></ul><ul id="8ca1d841-cdfb-40c9-be15-bb59ae3831b3" class="bulleted-list"><li style="list-style-type:circle">“<em><strong>const Human copy</strong></em>” kullanmama nedenimiz ise bu şekilde yazdığımızda bu methoda Human class’nı geçici bir kopyası gönderilmiş olur. Bu sırada arka planda bir kopyalama süreci yaşanır. Büyük class yapılarında ciddi bir optimizasyon sorununa sebep olacaktır.</li></ul></li></ul></div></p></details></li></ul><ul id="aebbf72b-7f3b-48d3-8a3e-5a65cbe9d404" class="toggle"><li><details open=""><summary>ASSIGNMENT OPERATOR OVERLOADING</summary><p id="921edf3d-36da-4fda-897f-351d4271a155" class="">Evet doğru okudun “=” operatörünü aşırı yükleme yapcağız.</p><p id="9ea98e88-0182-4f41-a573-0dcf3c0fd0c8" class="">
+</p><p id="ba31fa8f-ed29-42da-be97-86bdbc3ed841" class="">Neden?<div class="indented"><p id="24dae0e8-d62c-4d63-ac4c-1869dda623d0" class="">Şimdi bildiğin üzere “=” bir atama yapmak için kullanıyoruz ancak bir nesneyi başka bir nesneye aktarmaya çalıştığımızda hata alırız. Çünkü bir nesneyi normal şartlarda başka bir nesneye atayamayız. Bunu yapabilmek için <em><strong>“Assignment Operator Overloading” </strong></em>yapıyoruz.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ae11bea-e60d-4f52-8eaf-9d1ccf0e1461" class="code"><code class="language-C++">class temp1{
+	public:
+		int x;
+		int y;
+
+		//.. diğer methodlar
+}
+
+int main(){
+	temp1 a;
+	temp2 b;
+
+	// a nesnesini b nesnesine atamak istersen hata alırız.
+	b = a;
+}
+// buradaki &quot;b = a&quot; hata vericektir.</code></pre><p id="df99c3a3-ea08-48d0-81a5-d99a9dc16d55" class="">
+</p><p id="0d5fa7cc-7ca8-42b2-ab81-7a23b830af59" class="">Atama operatörüne aşırı yükleme yaparak istediğimiz işlemesini yapmayı sağlayabiliriz.</p><p id="11f70c12-411b-49d1-86f3-103d3ac1aebb" class="">C++ dilinde, farklı/aynı sınıflar arasında doğrudan bir nesnenin diğerine ataması yapılamaz, çünkü sınıflar arasında varsayılan olarak tanımlı bir atama işlemi yoktur. Yani, <code><strong>b = a;</strong></code> ifadesinde <code><strong>a</strong></code> ve <code><strong>b</strong></code> nesneleri aynı sınıfa (<code><strong>temp1</strong></code>) ait olmasına rağmen, C++ dilinde otomatik olarak bir atama operatörü bulunmaz. Bu nedenle, <code><strong>b = a;</strong></code> ifadesi geçerli değildir ve derleme hatası alırsınız.</p><p id="c533bff1-3c2e-4c0a-a229-ec22b21300d8" class="">
+</p><p id="16f12165-4c5e-4280-a470-b24f6a58ba22" class="">Eğer <code><strong>a</strong></code> ve <code><strong>b</strong></code> nesneleri aynı sınıfa (<code><strong>temp1</strong></code>) ait olduğu için değerlerini kopyalamak istiyorsanız, <code><strong>temp1</strong></code> sınıfı için uygun bir kopyalama (copy) işlemi tanımlamanız gerekecektir. <code><strong>temp1</strong></code> sınıfına özel bir <mark class="highlight-red"><em><strong>assignment operatörü</strong></em></mark> yazarak bu işlemin yapılmasını sağlayabiliriz.</p><p id="2128f571-ab1a-431f-8de1-563e2d3f2eb7" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4d8f7df6-9071-4a3e-8928-486a49466223" class="code"><code class="language-C++">class temp1 {
+public:
+    int x;
+    int y;
+
+		//diger methodlar...
+
+    // Assignment operator tanımı
+    temp1&amp; operator=(const temp1&amp; copy);
+  }
+};
+
+temp1&amp; temp1::operator=(const temp1&amp; copy) {
+        this-&gt;x = other.x;
+        this-&gt;y = other.y;
+        return *this;
+// Burada değerlerin kopyalama işlemlerini manuel bir şekilde yapmış oluyoruz.
+// Bu sayede b = a; işlemindeki kopyalama işlemi gerçekleşmiş oluyor.
+}
+int main() {
+    temp1 a;
+    temp1 b;
+
+    // a nesnesinin değerlerini b nesnesine kopyalamak için assignment operatörü tanımlanmıştır
+    b = a;
+
+    return 0;
+}</code></pre><p id="22623980-0985-4802-b519-f8acfdd81af2" class="">
+</p></div></p></details></li></ul><p id="5df27bd1-bbb5-4ae9-a47f-88f7a312494f" class="">
+</p><p id="b3dadeb9-cb47-4528-a780-d74fb074c4de" class="">Şimdi şuraya bir Deep Copy Örneği Bırakıyorum 🙂</p><ul id="c93f61b9-0670-4a52-af59-f7bce82ad6e3" class="toggle"><li><details open=""><summary><em>Deep Copy</em></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="354d972d-eb0e-4f54-854b-49d43245037b" class="code"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class DeepCopy {
+	public:
+   		int size;
+    	int* data;
+
+		// Default constructor
+		DeepCopy(int size) : size(size) {
+			data = new int[size];
+		}
+		// Buradaki size(size) aklınızı karıştırmasın bu aslında şu anlama geliyor
+		/*
+		DeepCopy(int size) {
+			this-&gt;size = size;
+			data = new int[size];
+		}
+		Kısaltma bir kullanımdır. */
+
+		// Copy constructor (deep copy)
+		DeepCopy(const DeepCopy&amp; other) : size(other.size) {
+			//Burada ki de aynı anlama geliyor this-&gt;size = other.size;
+			data = new int[size];
+			std::memcpy(data, other.data, size * sizeof(int));
+			std::cout &lt;&lt; &quot;Deep copy constructor çağırıldı.&quot; &lt;&lt; std::endl;
+		}
+
+		// Destructor
+		~DeepCopy() {
+			// Dinamik bellek kullandığımız için Destructor da siliyoruz.
+			delete[] data;
+		}
+};
+
+int main() {
+    // Orijinal nesne oluşturuluyor
+    DeepCopy obj1(3);
+    obj1.data[0] = 1;
+    obj1.data[1] = 2;
+    obj1.data[2] = 3;
+
+    // Derin kopya yapılıyor
+    DeepCopy obj2 = obj1;
+
+    // Birinci nesnenin verileri değiştiriliyor
+    obj1.data[0] = 10;
+
+    // İkinci nesnenin verileri bastırılıyor
+    std::cout &lt;&lt; &quot;obj2.data[0]: &quot; &lt;&lt; obj2.data[0] &lt;&lt; std::endl; // Derin kopya olduğu için obj2.data[0] hala 1
+    std::cout &lt;&lt; &quot;obj2.data[1]: &quot; &lt;&lt; obj2.data[1] &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;obj2.data[2]: &quot; &lt;&lt; obj2.data[2] &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><p id="598cc7db-bb73-43a0-a158-b2e153092010" class="">
+</p></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
