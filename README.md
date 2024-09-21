@@ -1,6 +1,7 @@
 # 🎓 Proje Dökümantasyonu: Bilginin Işığına Yolculuk 🚀
 
-Merhaba ve hoş geldiniz! 🎉 Bu repo, Notion üzerinde özenle hazırlanmış olan teknik dökümantasyonlarımı barındırıyor. Öğrenmek, keşfetmek ve bilgi paylaşımına katkı sağlamak amacıyla oluşturulan bu kaynaklar, HTML formatına dönüştürülmüş haliyle burada sizinle! 📚✨
+Merhaba ve hoş geldiniz! 🎉 
+Bu repo, Notion üzerinde özenle hazırlanmış olan teknik dökümantasyonlarımı barındırıyor. Öğrenmek, keşfetmek ve bilgi paylaşımına katkı sağlamak amacıyla oluşturulan bu kaynaklar, HTML formatına dönüştürülmüş haliyle burada sizinle! 📚✨
 
 ## ✨ Bu Reponun Amacı
 
@@ -16,9 +17,9 @@ GitHub üzerinde HTML dosyalarını direkt görüntülemek pek mümkün olmadı�
 
 1. **Git ile Klonlama**: Terminal veya Git Bash kullanarak şu komutu çalıştırın:
    ```bash
-   git clone https://github.com/kullaniciadi/proje-adi.git
+   git clone git@github.com:Ifmai/Dokumantasyonlar.git
 
-2. **ZIP Olarak İndirin
+2. **ZIP Olarak İndirin**
 
 Sayfanın üst kısmındaki **Code** butonuna tıklayın ve **Download ZIP** seçeneğini seçerek tüm dosyaları arşiv olarak indirin.
 
