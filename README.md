@@ -36,7 +36,7 @@ Sayfanın üst kısmındaki **Code** butonuna tıklayın ve **Download ZIP** se�
 
 ### 💬 Geri Bildirim ve Katkı
 
-Eğer dökümantasyonlar hakkında sorularınız varsa, önerilerde bulunmak istiyorsanız ya da herhangi bir hata fark ederseniz, lütfen [issue açmaktan](https://github.com/kullaniciadi/proje-adi/issues) çekinmeyin. Her türlü geri bildirim benim için çok değerli! 💬🤝
+Eğer dökümantasyonlar hakkında sorularınız varsa, önerilerde bulunmak istiyorsanız ya da herhangi bir hata fark ederseniz, lütfen [issue açmaktan](https://github.com/Ifmai/Dokumantasyonlar/issues) çekinmeyin. Her türlü geri bildirim benim için çok değerli! 💬🤝
 
 Bu repo, bilgi paylaşımı yolculuğumuzun bir parçası. Hep birlikte daha çok şey öğrenmek ve başkalarına da ışık tutmak dileğiyle! 🌱🚀
 
