@@ -1,5 +1,5 @@
 
-# Merhaba ve hoş geldiniz! 🎉 
+# Merhaba hoş geldiniz! 🎉 
 Bu repo, Notion üzerinde özenle hazırlanmış olan teknik dökümantasyonlarımı barındırıyor. Öğrenmek, keşfetmek ve bilgi paylaşımına katkı sağlamak amacıyla oluşturulan bu kaynaklar, HTML formatına dönüştürülmüş haliyle burada sizinle! 📚✨
 
 ## ✨ Bu Reponun Amacı
