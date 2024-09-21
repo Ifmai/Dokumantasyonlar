@@ -1,0 +1,876 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Array</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="85de6a3b-cb69-48a4-914d-f74a659f84b1" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧬</span></div><h1 class="page-title">Array</h1><p class="page-description"></p></header><div class="page-body"><p id="a24d0dda-7267-4cef-8e64-7e42929896f4" class="">C++11&#x27;de dizi sınıfının kullanılmaya başlanması, C tarzı diziler için daha iyi bir alternatif sunmuştur. Dizi sınıfının C tarzı diziye göre avantajları özetle şunlardır.</p><p id="a4076c24-b7cb-4365-84a6-e86a4aea47b8" class="">
+</p><ul id="8d5dbd14-c88c-4bfe-9430-a2cc3bb66ffe" class="bulleted-list"><li style="list-style-type:disc">Array sınıfları kendi boyutunu bilirken, C tarzı dizilerde bu özellik yoktur. Bu yüzden fonksiyonlara aktarırken, Array&#x27;in boyutunu ayrı bir parametre olarak aktarmamız gerekmez.</li></ul><ul id="8c8e1f0a-26c4-4d69-9566-1ce08f079406" class="bulleted-list"><li style="list-style-type:disc">C tarzı dizilerde, dizinin bir işaretçiye dönüşme riski daha fazladır. Dizi sınıfları işaretçilere dönüşmez.</li></ul><ul id="315681f4-9c72-4212-9b87-f41af760ea7b" class="bulleted-list"><li style="list-style-type:disc">Dizi sınıfları genellikle C tarzı dizilerden daha verimli, hafif ve güvenilirdir.</li></ul><p id="f99fd4aa-5394-47ca-874c-e5489fd669c9" class="">
+</p><ul id="655e3a44-c19e-4dfe-91c8-b42fb3f9a3fc" class="toggle"><li><details open=""><summary>Şimdi işaretçilere pointerlara dönüşmez ifadesi ne demek? Bu “Dizi Bozulması” olarak da geçer peki bu nedir? (Yanda ki aşağı okuna bas.)</summary><p id="a1966435-32bb-4dba-8dca-8dd9aa677443" class="">Bir dizinin türünü ve boyutlarını kaybetmesi, dizinin bozulması olarak bilinir. Bu genellikle diziyi fonksiyona değer veya işaretçi ile aktardığımızda meydana gelir. Fonksiyonun yaptığı şey, bir işaretçi olan diziye ilk adresi göndermektir, bu nedenle dizinin boyutu orijinal boyut değil, bellekte işaretçi tarafından işgal edilen boyuttur. Bunu basit bir örnekle gösterelim.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a0ce3866-3330-489a-9729-3e527f64b20b" class="code"><code class="language-C++">#include &lt;iostream&gt;
+using namespace std;
+
+void aDecay(int* p)
+{
+    // Buraya gönderdik ve bakalım. Sonuç 28 çıkması lazım ama output 8.
+    cout &lt;&lt; &quot;Modified size of array is by &quot;
+            &quot; passing by value: &quot;;
+    cout &lt;&lt; sizeof(p) &lt;&lt; endl;
+}
+
+int main()
+{
+    int a[7] = {
+        1, 2, 3, 4, 5, 6, 7,
+    };
+
+    // İlk orjinal hali. Sonuç 28 olması gerekiyor.
+    cout &lt;&lt; &quot;Actual size of array is: &quot;;
+    cout &lt;&lt; sizeof(a) &lt;&lt; endl;
+
+    // Bozulma işleminin gerçekleşceği yer.
+    aDecay(a);
+
+    return 0;
+}</code></pre><figure id="4457233d-9d10-465c-bec5-ae6b25c64868" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.06.12.png"><img style="width:680px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.06.12.png"/></a></figure><p id="e6698f40-ed66-46be-ac33-026b9a7ee75a" class="">Gördüğünüz gibi array 4x7 den 28 gelmesi gerekirken 8 gelmesi durumu. Tüm pointerlar 8byte olduğundan burada ki durumda arrayda çürüme/bozulma durumu gerçekleşir.</p><p id="fa214bd1-118c-4e90-8181-27834e365654" class="">
+</p><p id="efebeb8e-bef6-47c2-b149-dffb18a17458" class="">Bunun önüne şu şekilde geçebiliriz.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="985e73d8-7113-4654-8499-6e448c4c2ad2" class="code"><code class="language-C++">#include &lt;iostream&gt;
+using namespace std;
+
+// Burada Referans olarak alıp iki boyutluya
+//array haline getirirsek doğru sonucu alabiliriz.
+//ancak bu zamanda ilk elemana p[0][1] olarak ulaşırız.
+void aDecay(int (&amp;p)[7])
+{
+    cout &lt;&lt; &quot;Modified size of array is by &quot;
+            &quot; passing by value: &quot;;
+    cout &lt;&lt; sizeof(p) &lt;&lt; endl;
+}
+
+int main()
+{
+    int a[7] = {
+        1, 2, 3, 4, 5, 6, 7,
+    };
+
+    cout &lt;&lt; &quot;Actual size of array is: &quot;;
+    cout &lt;&lt; sizeof(a) &lt;&lt; endl;
+
+    aDecay(a);
+
+    return 0;
+}</code></pre><figure id="a8f9fcd1-4b26-4159-befb-f27f343d9537" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.10.11.png"><img style="width:680px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.10.11.png"/></a></figure><p id="c54446bd-e2fc-40dd-9ea8-1aff8cc53ce9" class="">Bu şekilde referans ve dizi boyutunu göndererek bu sorunu çözebiliriz. Ancak bu işlemi pointer kullanarak yaptığınızda sorun çözülmeyecektir. Bu dizilerdeki bozulma işlemidir. Array containerlarında bu işlem olmamaktadır.</p></details></li></ul><h2 id="74bf2019-f843-42f7-9723-711844e857ee" class=""><strong>Operations On Array</strong></h2><p id="f7f0a650-8739-4d99-b96d-5c7458f62742" class="">
+</p><ol type="1" id="99b8513a-6c92-4f8e-a1d5-cfef9e948530" class="numbered-list" start="1"><li><strong> at()</strong> :- Bu fonksiyon eleman içerisinde ki değerlere erişmek için kullanılır.</li></ol><ol type="1" id="e1b8face-7012-40cb-b6ee-41c16565081a" class="numbered-list" start="2"><li><strong> get()</strong> :- Bu fonksiyon bize “at” gibi dizi içerisinde ki istediğimiz değeri geri döndürür. Bu fonksiyon Array containerı için özel bir üye methodu değildir. Tupple da bulunan get methodunun override edilmiş halidir.</li></ol><ol type="1" id="755ca939-81a0-43eb-b10a-1e3c97a84e5d" class="numbered-list" start="3"><li><strong> operator[]</strong> :- C de olduğu gibi buradada [] operatörü kullanılarak array içerisinde ki değerlere ulaşım sağlıyabiliriz.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4854e3f2-e5ca-4cc4-bb9d-837beffc5544" class="code"><code class="language-C++">#include&lt;iostream&gt;
+#include&lt;array&gt; // array, at()
+#include&lt;tuple&gt; // get()
+using namespace std;
+int main()
+{
+	array&lt;int,6&gt; ar = {1, 2, 3, 4, 5, 6};
+
+	cout &lt;&lt; &quot;The array elements are (using at()) : &quot;;
+	for ( int i=0; i&lt;6; i++)
+		cout &lt;&lt; ar.at(i) &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;The array elements are (using get()) : &quot;;
+	cout &lt;&lt; get&lt;0&gt;(ar) &lt;&lt; &quot; &quot; &lt;&lt; get&lt;1&gt;(ar) &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; get&lt;2&gt;(ar) &lt;&lt; &quot; &quot; &lt;&lt; get&lt;3&gt;(ar) &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; get&lt;4&gt;(ar) &lt;&lt; &quot; &quot; &lt;&lt; get&lt;5&gt;(ar) &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+//Hatalıdır böyle bir kullanıma get izin vermez.
+/* 	for ( int i=0; i&lt;6; i++)
+		cout &lt;&lt; get&lt;i&gt;(ar) &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl; */
+
+	cout &lt;&lt; &quot;The array elements are (using operator[]) : &quot;;
+	for ( int i=0; i&lt;6; i++)
+		cout &lt;&lt; ar[i] &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+	return 0;
+
+}</code></pre><p id="74181606-6b8f-4f84-9044-09549af2c1e8" class="">Ekran çıktısı:</p><figure id="ba176139-6ce8-4683-b0f2-8e9245afdf1d" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.18.16.png"><img style="width:708px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.18.16.png"/></a></figure><ol type="1" id="6074de4e-b780-4a83-9ff0-0ebf2da78548" class="numbered-list" start="4"><li><strong>front() </strong>:- Dizinin ilk elemanını değerinin adresini ve değerini döndürür.</li></ol><ol type="1" id="1b038dbb-34e6-4443-bdcc-0c49c1b6a935" class="numbered-list" start="5"><li><strong>back() </strong>:- Diizinin son elemanının değerini ve adresini döndürür.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0029ddd4-39df-4764-8ae8-acb477f86701" class="code"><code class="language-C++">#include&lt;iostream&gt;
+#include&lt;array&gt;
+using namespace std;
+int main()
+{
+	// Initializing the array elements
+	array&lt;int,6&gt; ar = {1, 2, 3, 4, 5, 6};
+
+	// İlk elemanı yazdıralım
+	cout &lt;&lt; &quot;First element of array is : &quot;;
+	int &amp;a=ar.front();
+	cout &lt;&lt;a&lt;&lt; endl;
+
+	// Son elemanı yazdıralım
+	cout &lt;&lt; &quot;Last element of array is : &quot;;
+	int &amp;b=ar.back();
+	cout &lt;&lt; b &lt;&lt; endl;
+	
+	// İlk ve son elemanı referans aracılığı ile değiştirelim.
+	a=10; // 1. Eleman 10 değeri atadık.
+	b=60; // Son elemana 60 değeri atadık.
+	
+	// Görelim değişmiş mi.
+	cout&lt;&lt;&quot;array after updating first and last element \n&quot;;
+	for (auto x: ar)
+		cout&lt;&lt;x&lt;&lt;&quot; &quot;;
+	cout&lt;&lt;endl;
+
+	return 0;
+}</code></pre><p id="b8c602e9-78d7-43ee-8c82-dc802d283839" class="">Ekran çıktısı:</p><figure id="3e4f57b7-8cae-4341-b649-9a42fe44c422" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.25.43.png"><img style="width:708px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.25.43.png"/></a></figure><p id="72e7890b-ac79-4a7c-8110-aa6da950e016" class="">
+</p><ol type="1" id="a22f283a-9672-4035-a924-21a74b857b41" class="numbered-list" start="6"><li><strong>size() </strong>:- Array’in şuanda ayrılan yerin boyutunu geri döndürür.</li></ol><ol type="1" id="d96b30f7-cf41-4c0d-ab5a-52834c4beefa" class="numbered-list" start="7"><li><strong>max_size() </strong>:- Array’in en fazla kaç değer alabileceği değeri döndüren methoddur. size ile aynı değeri geri döndürür.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="624eda3f-da83-42f7-867b-708895f733fe" class="code"><code class="language-C++">#include&lt;iostream&gt;
+#include&lt;array&gt;
+using namespace std;
+int main()
+{
+	array&lt;int,6&gt; ar = {1, 2, 3, 4, 5, 6};
+
+	cout &lt;&lt; &quot;The number of array elements is : &quot;;
+	cout &lt;&lt; ar.size() &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;Maximum elements array can hold is : &quot;;
+	cout &lt;&lt; ar.max_size() &lt;&lt; endl;
+
+	return 0;
+
+}</code></pre><p id="d7670d5a-fd32-4a18-83aa-e5a9d726ea02" class="">Ekran çıktısı:</p><figure id="aab4d493-5565-4531-a1db-0f175cd42b17" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.28.08.png"><img style="width:708px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.28.08.png"/></a></figure><p id="0bc6610b-4581-4f01-9e61-63b1d281e61e" class="">
+</p><ol type="1" id="064982e6-bb8c-4214-ae58-08a26453d92e" class="numbered-list" start="8"><li><strong>swap()</strong> :- İki tane aynı tipte ve aynı boyutta olan Array’in elemanlarını değiştirir.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0fbcff65-0b40-4bc1-aa84-14f3f57471ee" class="code"><code class="language-C++">#include&lt;iostream&gt;
+#include&lt;array&gt; 
+using namespace std;
+int main()
+{
+
+	array&lt;int,6&gt; ar = {1, 2, 3, 4, 5, 6};
+
+	array&lt;int,6&gt; ar1 = {7, 8, 9, 10, 11, 12};
+
+	cout &lt;&lt; &quot;The first array elements before swapping are : &quot;;
+	for (int i=0; i&lt;6; i++)
+	cout &lt;&lt; ar[i] &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;The second array elements before swapping are : &quot;;
+	for (int i=0; i&lt;6; i++)
+	cout &lt;&lt; ar1[i] &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+	ar.swap(ar1);
+
+	cout &lt;&lt; &quot;The first array elements after swapping are : &quot;;
+	for (int i=0; i&lt;6; i++)
+	cout &lt;&lt; ar[i] &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+	cout &lt;&lt; &quot;The second array elements after swapping are : &quot;;
+	for (int i=0; i&lt;6; i++)
+	cout &lt;&lt; ar1[i] &lt;&lt; &quot; &quot;;
+	cout &lt;&lt; endl;
+
+	return 0;
+
+}</code></pre><p id="749a0d1a-6d21-4d22-9ad2-3641b00baaf1" class="">Ekran çıktısı:</p><figure id="a36abda7-8237-4bae-9f37-c5ee69c29329" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.31.06.png"><img style="width:708px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.31.06.png"/></a></figure><p id="9fb5fa81-fcf1-4d02-ac3b-7872780c685e" class="">Dip Not : Swap için boyutlar eşit olmak zorunda.</p><p id="6aa6a637-ef62-4457-8535-d902fef05f83" class="">
+</p><ol type="1" id="150b7f29-6330-4cc9-9943-aa894efd4377" class="numbered-list" start="9"><li><strong>empty()</strong> :- Array tamamen boşsa true değilse false değeri döndürür. (Boş olmasının bir önemi yok yer ayırılmamış olması gerekiyor. Aşağıda ki örnekte daha iyi anlayabilirsin.)</li></ol><ol type="1" id="baefd080-c833-4e7b-9496-a853c34c2801" class="numbered-list" start="10"><li><strong>fill()</strong> :-  İstediğimiz bir değer ile tüm Array elemanlarını doldurur.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9992c2d2-3f57-4ed7-9f21-343ee9859578" class="code"><code class="language-C++">#include&lt;iostream&gt;
+#include&lt;array&gt;
+using namespace std;
+int main()
+{
+	array&lt;int,6&gt; ar;
+	array&lt;int,0&gt; ar1;
+
+	// Array boş mu değil mi bunu kontrol ediyoruz.
+	ar1.empty()? cout &lt;&lt; &quot;Ar1 Array empty&quot;:
+		cout &lt;&lt; &quot;Ar1 Array not empty&quot;;
+	cout &lt;&lt; endl;
+
+	ar.empty()? cout &lt;&lt; &quot;Ar Array empty&quot;:
+		cout &lt;&lt; &quot;Ar Array not empty&quot;;
+	cout &lt;&lt; endl;
+
+	// Array&#x27;i dolduruyoruz.
+	ar.fill(0);
+
+	// Tekrardan görelim.
+	cout &lt;&lt; &quot;Array after filling operation is : &quot;;
+	for ( int i=0; i&lt;6; i++)
+		cout &lt;&lt; ar[i] &lt;&lt; &quot; &quot;;
+
+	return 0;
+}</code></pre><p id="8d1990c9-95b9-4157-a7d0-33b12dad1810" class="">Ekran çıktısı:</p><figure id="b8eb6645-4771-4370-b7ec-5b96c2b2dfd3" class="image"><a href="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.34.56.png"><img style="width:708px" src="Array%2085de6a3bcb6948a4914df74a659f84b1/Ekran_Resmi_2024-05-12_20.34.56.png"/></a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

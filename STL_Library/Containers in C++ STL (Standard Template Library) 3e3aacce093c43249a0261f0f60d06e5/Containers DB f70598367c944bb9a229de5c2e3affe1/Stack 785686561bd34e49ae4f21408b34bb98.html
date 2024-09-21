@@ -1,0 +1,808 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Stack</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="78568656-1bd3-4e49-ae4f-21408b34bb98" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧬</span></div><h1 class="page-title">Stack</h1><p class="page-description"></p></header><div class="page-body"><p id="3351fd8d-faf5-43b0-ac88-482f2067f4d7" class="">Stackler, LIFO (LAST IN FIRST OUT) çalışma türüne sahip bir tür container adaptörüdür.</p><p id="d1360823-8df8-47e6-846c-fda14516d3e4" class="">Burada yeni bir eleman bir uca (üst) eklenir ve bir eleman yalnızca bu uçtan çıkarılır.  Stack, temel kapsayıcı olarak vektör veya deque (varsayılan olarak) veya liste (sıralı kapsayıcı sınıfı) kapsüllenmiş bir nesne kullanır ve öğelerine erişmek için belirli bir üye işlev kümesi sağlar.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ef1e5d4b-fa22-4986-af51-6e9cb5e9a7e5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Bu metin biraz kafa karışıklığına neden olmuş olabilir. Burada açıklamaya çalıştığı için aşağıdaki toggle listi aç.</div></figure><ul id="4d4f54ba-bf0e-462f-8a51-5c5d58a270ce" class="toggle"><li><details open=""><summary>Kafan Karıştıysa oku.</summary><p id="04a76fb4-81b4-4ea2-a9ac-2d6ad1ea03f8" class="">Stack içerisinde farklı veri türleri tutabilir. Genellikle bu kullanılan veri türleri vektör/deque gibi dinamik diziler ya da listeler gibi sıralı veri yapıları kullanılır. Bu stack’in içinde sadece normal datatype lar değil bu şekilde başka containerlarda tutabileceğini ifade eder.<br/><br/><br/><mark class="highlight-red">template &lt;class Type, class Container = deque&lt;Type&gt; &gt; class stack;</mark></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="21e79ddc-02ed-4c8a-88c3-beb3e2aba4b1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Burada ki satırın meali :<br/>Bir template sınıf oluşturuyor ve bu sınıf içerisinde iki adet template değişken var.<br/><br/>1. Class Type burada bizim dataType’ımızı temsil ediyor.<br/>2. Class Container ise bir container sınıfı alıcağını söylüyor ancak herhangi bir container belirtilmesse default olarak deque olarak belirle ve deque’nin data type’ına birinci paremetreyi veriyor. Bu sayade stack Class Type ile Deque Container Type ‘ı aynı olmuş oluyor.<br/></div></figure><p id="dcf27c5e-b40a-4e2b-a799-2002f4f2c001" class=""><br/><br/>Bu &lt;stack&gt; header file içerisinde bulunan default stack tanımıdır. Herhangi bir şekilde bir tip belirtmezsek stack içerisinde ki verileri deque container ile tutucaktır. <br/><br/><br/><strong><mark class="highlight-red">Stack&lt; int, vector &lt;int&gt; &gt; myStack;</mark></strong> Bu şekilde yazarsak içerisinde  <mark class="highlight-red">Vector</mark> olarak depolayıp tutcaktır ancak eğer<br/><br/><strong><mark class="highlight-red">Stack&lt;int&gt; myStack;</mark></strong> yazsaydık bu seferde default değer olarak <mark class="highlight-red">deque</mark> olarak depolayıp tutucaktır.</p><figure id="d9279b09-d212-4470-9862-bee5cd3cedd6" class="image"><a href="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-14_21.16.43.png"><img style="width:1142px" src="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-14_21.16.43.png"/></a></figure><p id="dadade77-0547-480d-b926-ae7d70135e45" class="">Bu nasıl oluyor dicek olursanız ?<br/><br/></p><figure id="9ba4aa34-dc99-4580-9a33-81c1ff810c20" class="image"><a href="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-17_17.23.12.png"><img style="width:858px" src="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-17_17.23.12.png"/></a></figure><p id="9e3014db-70d5-4a53-81b2-7565dc5201aa" class="">Bu ekran <a href="https://en.cppreference.com/w/cpp/container/stack">görüntüsü</a> şu siteye ait.(Görüntüsü üzerine tıklayıp gidebilirsin.) İyi de bu nedemek? </p><p id="520b11e5-5e8f-4858-94c3-e65ed3b48b1b" class="">Adaptörler bildiğiniz gibi bir container değildir. Bu yüzden direk STL kütüphanesine ait fonksiyonları kullanamıyorlardı. Şimdi biraz daha açıklayıcı olalım.<br/>C++ referans sitesinde ki bu yer  <br/><mark class="highlight-red">std::stack</mark> sınıfının <mark class="highlight-red">Container C</mark> şeklinde bir üye tanımının olduğu gösteriyor. Bu ifade, <mark class="highlight-red">std::stack</mark> sınıfının içinde bulunan ve genellikle <strong><mark class="highlight-red">std::deque</mark></strong>, <strong><mark class="highlight-red">std::vector</mark></strong> veya <strong><mark class="highlight-red">std::list</mark></strong> gibi bir veri yapısını işaret eden bir üye değişkeni olduğunu söylüyor bize. Biraz yukarıda ki ekran görüntüsünde <mark class="highlight-red">&lt;set&gt; header file </mark>içerisinden bir constuructor tanımı göstermiştim. Orada deque’yi görmüştünüz.</p><figure id="222c58a1-e85a-4605-93ee-e18689a0b02b" class="image"><a href="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-17_17.33.32.png"><img style="width:680px" src="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-17_17.33.32.png"/></a></figure><p id="cfd55d66-74b9-4194-8a14-3688b7c3c7a7" class="">Burada da gördüğünüz gibi <mark class="highlight-red">Container_type c’</mark>yi görebiliyorsunuz. Tanımı yukarıda Container<em> __</em>containertype olarak geçiyor. Şimdi niye stack diye bir şey var dersen?<br/>Bu adaptörler, mevcut veri yapılarını farklı erişim yöntemleri veya sınırlamalar ile kullanmanızı sağlar. Stackte ıterator doğrudan kullanamıyoruz  içerisinde default olarak deque vb. bile olsa.<br/></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0be5fd42-71c6-4401-9962-62296cb53a3c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong><mark class="highlight-red">Dip Not</mark></strong> : Siz ne kadar içerisinde vector kullansanızda LIFO mantığı değişmez (Değiştirmenin bir yolu var ancak önce stack’i ve bu dediklerimi öğrenelim başta.). (LAST IN FIRST OUT) Vector de buna ayak uydurur ve yoluna devam eder. Neden peki içerisinde deque veya vector tutabiliyoruz gibi bir şey sorucak olursanız?<br/><br/><br/><mark class="highlight-red">Stack</mark> , aslında bir arayüz veya sarma (<mark class="highlight-red">wrapper</mark>) sınıfıdır. Bu, belirli bir veri yapısını (örneğin, <code><strong>vector</strong></code>, <code><strong>list</strong></code> veya <code><strong>deque</strong></code>) sarmalayan ve LIFO işlevselliğini sağlayan bir sınıftır. Ancak, <code><strong>std::stack</strong></code> sınıfının kendisi, bu veri yapılarının tüm işlevselliğini sunmaz. Bunun yerine, yalnızca LIFO mantığına uygun olan işlevleri sağlar. Bu, genellikle <code><strong>push</strong></code>, <code><strong>pop</strong></code> ve <code><strong>top</strong></code> gibi işlevlerdir.</div></figure><ul id="94c55bc1-02a0-4346-99ac-de15794ca1d6" class="toggle"><li><details open=""><summary>C++ Kod ve ekran görüntüüs ile  kullanım kanıtı.</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="79309077-0ecb-45f3-939c-ff1daaf3867a" class="code"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;stack&gt;
+#include &lt;vector&gt;
+#include &lt;typeinfo&gt; // type_id için
+
+int main() {
+    // std::stack&#x27;ın container_type&#x27;ını belirlemek için bir örnek oluşturuyoruz
+    std::stack&lt;int&gt; myStack;
+		std::stack&lt;int, std::vector&lt;int&gt; &gt; myStack2;
+    // container_type&#x27;ı auto ile belirliyoruz
+    auto container_type = myStack.__get_container();
+		auto container_type2 = myStack2.__get_container();
+    // container_type&#x27;ın türünü yazdırıyoruz
+    std::cout &lt;&lt; &quot;container_type mystac : &quot; &lt;&lt; typeid(container_type).name() &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;container_type mystack2: &quot; &lt;&lt; typeid(container_type2).name() &lt;&lt; std::endl;
+
+    // Diğer işlemleri devam ettirebiliriz
+    myStack.push(1);
+    myStack.push(2);
+    myStack.push(3);
+
+    while (!myStack.empty()) {
+        std::cout &lt;&lt; myStack.top() &lt;&lt; &quot; &quot;; // En üstteki elemanı yazdır
+        myStack.pop(); // En üstteki elemanı çıkar
+    }
+
+    return 0;
+}</code></pre><figure id="d510d104-7da9-4070-81de-9fbcca61012e" class="image"><a href="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-17_17.46.23.png"><img style="width:652px" src="Stack%20785686561bd34e49ae4f21408b34bb98/Ekran_Resmi_2024-05-17_17.46.23.png"/></a></figure><p id="8c6bf1b7-6c6d-4f96-bc75-6b51e33012bb" class="">
+</p></details></li></ul></details></li></ul><p id="67e960bc-faea-4937-97b4-ad1c1c21a24c" class="">Stack ve Queue arasındaki temel farkı hatırlamakta kafa karışıklığı varsa, bu ayrım için gerçek hayattan bir örnek verelim, stack için, kitapların istiflenmesi için en üstteki kitabı kolayca alabiliriz ve kuyruk için ATM&#x27;nin önünde para çekmek için kuyrukta durmanız gerektiğinde, ATM&#x27;ye yakın olan ilk kişinin ATM&#x27;den parayı almak için ilk şansı olduğunu hatırlayın. Yani, kuyruk FIFO (İlk Giren İlk Çıkar) tipi bir çalışmadır.</p><p id="37f88e5b-cb8d-4263-b753-cae9ad01f973" class="">
+</p><h3 id="02c72f60-9bb3-4ef8-aa9a-9032c065cfae" class="">Stack hangi durumlarda kullanılır?</h3><blockquote id="cb337dbc-24f1-4ed3-9484-2f2bdeb354de" class="">Stack elemanlarımızı rastgele depolamak için değil sıralı kalması gereken verilerimizi depolamak için kullanırız. Bu durumlarda kullanmak için tercih edilir. </blockquote><p id="f46fab3e-04ee-4149-87cb-bc88ab23d73c" class="">
+</p><h3 id="922db99c-16c3-41aa-b120-a98bafda6f5b" class="">Stack Syntax:</h3><p id="00d06700-5c3f-4185-b6dd-74c8f7d9583f" class="">Bir yığın oluşturmak için kodumuza &lt;stack&gt; başlık dosyasını dahil etmeliyiz. Daha sonra std::stack&#x27;i tanımlamak için bu söz dizimini kullanırız:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8741383f-9739-460f-aa0b-cbc3ea86eb26" class="code"><code class="language-C++">#include &lt;iostream&gt; 
+#include &lt;stack&gt;
+#include &lt;vector&gt;
+#include &lt;list&gt;
+using namespace std;
+int main() {
+	stack&lt;int&gt; stack1;
+	stack&lt;int, vector&lt;int&gt;&gt; stack2;
+	stack&lt;int, list&lt;int&gt;&gt; stack3;
+	stack&lt;int, deque&lt;int&gt;&gt; stack4;//Stack1 ile farkı yoktur.
+}</code></pre><p id="b7826020-8d33-488b-817e-077ca74ec2dd" class="">
+</p><h3 id="d004b873-70cb-4983-9ef3-1bd766036bb5" class="">Yığın ile ilişkili fonksiyonlar şunlardır:</h3><ul id="282835c4-db54-4117-a5f6-7f24a443fae6" class="bulleted-list"><li style="list-style-type:disc">empty() - Yığının boş olup olmadığını döndürür - Zaman Karmaşıklığı : O(1)</li></ul><ul id="ac0404e3-8b08-4b07-867b-4119b381d239" class="bulleted-list"><li style="list-style-type:disc">size() - Yığının boyutunu döndürür - Zaman Karmaşıklığı : O(1)</li></ul><ul id="23e683c8-c43c-4e2d-9b1d-986fb9942025" class="bulleted-list"><li style="list-style-type:disc">top() - Yığının en üstteki elemanına bir referans döndürür - Zaman Karmaşıklığı : O(1)</li></ul><ul id="70d7e951-80ef-419b-a52e-c0113c8d0e10" class="bulleted-list"><li style="list-style-type:disc">push(g) - &#x27;g&#x27; elemanını yığının en üstüne ekler - Zaman Karmaşıklığı : O(1)</li></ul><ul id="e1f0b1d5-1415-4464-96a2-876872bcfb01" class="bulleted-list"><li style="list-style-type:disc">pop() - Yığının en son girilen elemanını siler - Zaman Karmaşıklığı : O(1)</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="10c3d219-9920-4eca-9651-c472a7424355" class="code"><code class="language-C++">#include &lt;iostream&gt; 
+#include &lt;stack&gt;
+using namespace std;
+int main() {
+	stack&lt;int&gt; stack;
+	//Burada eklencek değerler stack define edilirken type ile aynı olmalıdır.
+	stack.push(21);
+	stack.push(22);
+	stack.push(24);
+	stack.push(25);
+	int num=0;
+	stack.push(num);
+	stack.pop();
+	stack.pop();
+	stack.pop();
+
+	while (!stack.empty()) {
+		cout &lt;&lt; stack.top() &lt;&lt;&quot; &quot;;
+		stack.pop();
+	}
+	//Stack kopyasını alan bir print yazmadığımız için tüm stack gg!
+}</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="aad4a186-02c0-4f8a-834c-bf8d41afa592"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong><mark class="highlight-red">Dip Not</mark></strong> : Siz ne kadar içerisinde vector kullansanızda LIFO mantığı değişmez (Değiştirmenin bir yolu var ancak önce stack’i ve bu dediklerimi öğrenelim başta.). (LAST IN FIRST OUT) Vector de buna ayak uydurur ve yoluna devam eder. Neden peki içerisinde deque veya vector tutabiliyoruz gibi bir şey sorucak olursanız?<br/><br/><br/><mark class="highlight-red">Stack</mark> , aslında bir arayüz veya sarma (<mark class="highlight-red">wrapper</mark>) sınıfıdır. Bu, belirli bir veri yapısını (örneğin, <code><strong>vector</strong></code>, <code><strong>list</strong></code> veya <code><strong>deque</strong></code>) sarmalayan ve LIFO işlevselliğini sağlayan bir sınıftır. Ancak, <code><strong>std::stack</strong></code> sınıfının kendisi, bu veri yapılarının tüm işlevselliğini sunmaz. Bunun yerine, yalnızca LIFO mantığına uygun olan işlevleri sağlar. Bu, genellikle <code><strong>push</strong></code>, <code><strong>pop</strong></code> ve <code><strong>top</strong></code> gibi işlevlerdir.</div></figure><p id="f93c8a10-852b-4540-acba-b5cd1c82c04d" class="">
+</p><p id="d893e112-68f6-45d2-b8bc-0b7c26ba9758" class="">
+</p><h3 id="b9d71b63-d775-4fe0-abff-5be8af6c9156" class="">Stack’te Iterator Nasıl Kullanılır?</h3><p id="de9fa940-3d47-4f9c-9c2f-302b5389da67" class="">Bunu okuduğun gibi aklına gelebilecek sorular;</p><ul id="0290ab12-ef1f-46b3-bbe2-0344f939eba3" class="bulleted-list"><li style="list-style-type:disc">Şimdi bir saniye ıterator kullanamıyorduk?</li></ul><ul id="10478712-e5eb-4708-995f-02da1f277fa8" class="bulleted-list"><li style="list-style-type:disc">Hani LIFO sistemi vardı?</li></ul><p id="75e6b180-f8f3-4749-a1c5-f92d7694551f" class="">
+</p><p id="41827caa-3e3b-4721-9bdc-e711c87b29f7" class="">Şimdi evet LIFO sistemi var biliyoruz bunu. Ancak sayfa başında ki toggle list’e bir şeyler anlatmıştım. Stack içerisinde __container_type adında bir protected üye değişkeni olduğunu söylemiştim. Aynı zamanda orada stack bir adaptördür bir container değildir demiştik. Bir sarma(wrapper) sınıf olduğunu söylemiştim. </p><p id="649c0fe0-650a-4855-a0ce-27a448e4bd2d" class="">Stack içerisinde kullandığı Containerları farkli bir arayüzle ve sınırlamayla bizim önümüze sunan bir adaptör bunu biliyoruz. Şimdi içerisinde ki “container_type c” üye değişkeni sayesinde biz kullandığımız container sayesinde STL kütüphanesine ulaşabilir ve STL kütüphanesine ait fonksiyonları kullanabiliriz. Bunlardan biride iterator(yineleyiciler)’dür. Bu sayede stack’te normalde iterator/begin/end gibi fonksiyonlar olmasada kullanabiliriz. </p><p id="08b40937-38a8-47c8-a621-f41b592b331d" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="29fb78fd-f6ab-47b9-bf7d-c062df0a26bb" class="code"><code class="language-C++">#ifndef ITSTACK_HPP
+# define ITSTACK_HPP
+
+# include &lt;iostream&gt;
+# include &lt;algorithm&gt;
+# include &lt;stack&gt;
+# include &lt;list&gt;
+# include &lt;vector&gt;
+# include &lt;deque&gt;
+
+template &lt;typename T, typename Container = std::deque&lt;T&gt; &gt;
+class ITStack : public std::stack&lt;T&gt;
+{
+	public:
+		ITStack() : std::stack&lt;T&gt;(){}
+		ITStack(const ITStack &amp;other) : std::stack&lt;T&gt;(other){}
+		ITStack &amp;operator=(const ITStack &amp;other){
+			std::stack&lt;T&gt;::operator=(other);
+			return *this;
+		}
+		~ITStack(){}
+
+		typedef typename std::stack&lt;T&gt;::container_type::iterator iterator;
+		//Stack sınıfıın içerisinde ki container_type sınıfnın içerisinde ki iterator.
+		//Bu sayede default da dequenin iteratorüne ulaşmış olduk :)
+		iterator begin(){
+			return std::stack&lt;T&gt;::c.begin();
+			//C üyesini kullandığımız yerlerden biri. 
+		}
+
+		iterator end(){ 
+			return std::stack&lt;T&gt;::c.end(); 
+		}
+};
+
+#endif
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20087186-381a-4640-86f2-34c58a068661" class="code"><code class="language-C++">#include &quot;ITStack.hpp&quot;
+
+int main() {
+    // ITStack tanımlama
+    ITStack&lt;int&gt; stack;
+
+    // Stack&#x27;e eleman ekleme
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+    stack.push(40);
+    stack.push(50);
+
+    // Stack içeriğini iteratör kullanarak yazdırma
+    std::cout &lt;&lt; &quot;Stack içeriği: &quot;;
+    for (ITStack&lt;int&gt;::iterator it = stack.begin(); it != stack.end(); ++it) {
+        std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+    }
+    std::cout &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><p id="131bfa3b-0baf-467d-9c96-170813c9aedd" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

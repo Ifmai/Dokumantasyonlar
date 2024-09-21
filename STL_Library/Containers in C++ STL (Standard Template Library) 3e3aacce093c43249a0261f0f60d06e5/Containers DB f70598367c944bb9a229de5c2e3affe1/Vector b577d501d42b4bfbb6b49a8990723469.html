@@ -1,0 +1,902 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Vector</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b577d501-d42b-4bfb-b6b4-9a8990723469" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧬</span></div><h1 class="page-title">Vector</h1><p class="page-description"></p></header><div class="page-body"><p id="2fa767f6-8164-43e5-a587-44307a6bbdf6" class="">Vektörler, bir öğe eklendiğinde veya silindiğinde kendilerini otomatik olarak yeniden boyutlandırma yeteneğine sahip dinamik dizilerle aynıdır ve depolanmaları container tarafından otomatik olarak gerçekleştirilir. </p><p id="2477297c-a71f-48f7-96cc-6fe8df832e55" class="">Vektör öğeleri, iterators kullanılarak erişilebilmeleri ve çaprazlanabilmeleri için bitişik depolama alanına yerleştirilir.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e67e9112-fc4e-41c0-9d36-977df4509f7f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Çaprazlanabilimeleri derken :  <mark class="highlight-red">Vektör öğelerine doğrudan erişim sağlanabilmesi,</mark> <mark class="highlight-red">örneğin, </mark><mark class="highlight-red"><code><strong>myVector[3]</strong></code></mark><mark class="highlight-red"> gibi , </mark>iterators<mark class="highlight-red"> kullanılmasının bir diğer yolunu vurgular. </mark>Iterators<mark class="highlight-red"> vektördeki öğeler arasında gezinmeyi ve işlem yapmayı kolaylaştırır. Örneğin, bir döngü kullanarak tüm vektör öğelerini işleyebiliriz.<br/><br/><br/></mark>Bitişik Depolama Alanına Yerleştirilir. <mark class="highlight-red">: Ramde sıralı bir şekilde yerleştirilmesinden bahseder.</mark></div></figure><p id="01d0d230-64af-4fec-9f6a-97384a6dd14b" class="">Vektörlerde veriler en sona eklenir. Bazen dizinin uzatılması gerekebileceğinden, sona ekleme n kadar verinin n kadar boyutu kadar zaman alır (Difransiyel Zaman alır. Eğer yer varsa bu sabit zaman alır ancak aksi durumda Difransiyel zaman alıcaktır.). </p><p id="004f8c66-0f82-40fc-9cba-e27813aa3fa7" class="">Son elemanın silinmesi yalnızca sabit bir zaman alır çünkü yeniden boyutlandırma gerçekleşmez. Başlangıçta veya ortada ekleme ve silme işlemi ise vetorün ne kadar veri tuttuğuna göre (doğrusal O(n) ) zaman alıcaktır.</p><h2 id="14a44b8b-2d86-4c9e-8800-12c9135f6395" class="">std::vector Nedir?</h2><p id="bb816511-ffa5-43f1-b109-a24c69f2e458" class="">C++&#x27;da std::vector, vektör container’ını ve üye methodlarını içeren class template’dir.  </p><p id="28a9d982-d9a1-4fb0-bb05-9056140f3f2b" class="">&lt;vector&gt; header dosyası içinde tanımlanmıştır. std::vector classının üye fonksiyonları vektör container’ın çeşitli işlevlerinin kullanılmasını sağlar.</p><p id="c160bae9-c941-4f3d-b546-84faa6f0d189" class="">
+</p><p id="ae922efe-01d2-469d-871a-bc774072514f" class=""><strong>C++’da Vector Declare (Tanım) Syntax’ı nasıl yapılır?</strong></p><blockquote id="cb86b9db-d650-4ee8-a70b-6f17694459f6" class=""><code><strong>std::vector</strong></code><code>&lt;dataType&gt; vectorName;</code><br/>Burada data type, vektörün her bir elemanının veri türüdür. Eğer <br/><mark class="highlight-red">“using namespace std;”</mark> kullandıysanız std::’yi kaldırabilirsiniz. </blockquote><p id="e8b1482f-47ec-4fab-9026-eacfdac5edbe" class="">
+</p><p id="62f7d672-0655-454d-9972-0bc7ba695727" class="">
+</p><p id="216ebd3e-9e24-4b23-a4b2-3f7cd8a2a35a" class=""><strong>C++’da Vector’ün Initialization (Atama) nasıl yapılır?</strong></p><p id="1981d15b-e00a-463e-8d5b-731692c5aeeb" class="">Bir vektörü birden çok şekilde <strong>Initialization </strong>edebiliriz. Aşadağıdakiler bir vektörü nasıl initialization edebileceğimizin bir listesi:</p><p id="46869ef8-e1f2-4545-8d5f-f6a8c0f6bf0a" class="">
+</p><p id="ccfdd010-979a-4cfd-866a-3f63b12f71c6" class=""><strong>1. Initialization Using List: (Liste kullanarak başlatma işlemi)</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2c9f55e5-93a8-4922-8de2-92be184b521d" class="code"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    // Bir vektör oluşturup başlangıç değerleri ile başlatma
+    std::vector&lt;int&gt; numbers = {10, 20, 30, 40, 50};
+
+    // Vektördeki üçüncü öğeyi ekrana yazdırma
+    std::cout &lt;&lt; numbers[2] &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="489ec244-8bd7-450b-b169-42f4d328c668"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Dip not: Eğer kodu derlemeye çalışırken hata alıyorsanız derleyeciniz c++11 ve üstünü desteklemiyor demektir. Bunun için g++ -std=c++11 x.cpp flagleri ile derleyebilirsiniz yada derleyicinizi güncelleyebilirsiniz.</div></figure><p id="c7b23bd4-bce7-4d2f-a39c-fd6da4eb1886" class="">
+</p><ol type="1" id="4dbb7da1-fa80-4849-a4c8-adcc4c783e73" class="numbered-list" start="2"><li><strong> Initialization With a Single Value (Tek Bir Değerle Başlatma)</strong></li></ol><p id="de9af1ed-3269-4de2-809e-70be2864887a" class="">Burada, vektörün boyutunu belirtiriz ve ardından vektörün her bir elemanını aynı değerle başlatırız.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="192f49e9-ebc8-4bc3-8ba2-8fb2d15251b1" class="code"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    // Bir vektör oluşturup tek bir değerle başlatma
+    std::vector&lt;int&gt; numbers(5, 100); // 5 eleman, her biri 100
+
+    // Vektördeki öğeleri ekrana yazdırma
+    std::cout &lt;&lt; &quot;Vektördeki öğeler: &quot;;
+    for (int num : numbers) {
+        std::cout &lt;&lt; num &lt;&lt; &quot; &quot;;
+    }
+    std::cout &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><h3 id="5ac9e6c7-8f7c-482a-8cda-fc4113cedc8c" class="">3. <strong>Initialization From Another Vector (Başka bir vektor’un kopyası ile başlatma)</strong></h3><p id="666e2ba9-789d-4c04-ba83-1f3c8bb4228a" class="">Bu initialization, other_vec&#x27;in tam bir kopyası olan bir vektör oluşturmak için kullanılır.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ada7c167-142f-4e69-b46e-7e8e6dd09367" class="code"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    // Birinci vektörü oluşturma ve başlangıç değerleriyle başlatma
+    std::vector&lt;int&gt; numbers1 = {1, 2, 3, 4, 5};
+
+    // İkinci vektörü, birinci vektörün kopyası olarak oluşturma
+    std::vector&lt;int&gt; numbers2(numbers1); // numbers2, numbers1&#x27;in kopyasıyla başlatılır
+
+    // İkinci vektördeki öğeleri ekrana yazdırma
+    std::cout &lt;&lt; &quot;İkinci vektördeki öğeler: &quot;;
+    for (int num : numbers2) {
+        std::cout &lt;&lt; num &lt;&lt; &quot; &quot;;
+    }
+    std::cout &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><p id="955042e5-f04f-4134-8d5f-a076524e281b" class=""><br/><br/></p><h3 id="376e28b0-6171-44b7-a209-e05e72f04655" class="">std::vector Sınıfının Yaygın Olarak Kullanılan Bazı Üye Fonksiyonları:</h3><p id="00ffc0ba-3662-417d-9849-0b16115691a7" class="">
+</p><ul id="33e6b429-0115-49cc-87f1-c984a8109020" class="toggle"><li><details open=""><summary><strong>Iterators Üye Fonksiyonları</strong></summary><ol type="1" id="37ad0515-0b7e-41c5-bec6-2a5d9dbf8163" class="numbered-list" start="1"><li><a href="https://www.geeksforgeeks.org/vectorbegin-vectorend-c-stl/"><strong>begin()</strong></a> – Vektördeki ilk öğeye işaret eden bir Iterator döndürür</li></ol><ol type="1" id="aad03f67-1a2d-4c85-98f0-979ba97de484" class="numbered-list" start="2"><li><a href="https://www.geeksforgeeks.org/vectorbegin-vectorend-c-stl/"><strong>end()</strong></a> – Vektördeki son elemanı takip eden teorik elemana işaret eden bir Iterator döndürür</li></ol><ol type="1" id="6faf10e7-98bc-401b-8c25-86efd422927c" class="numbered-list" start="3"><li><a href="https://www.geeksforgeeks.org/vector-rbegin-and-rend-function-in-c-stl/"><strong>rbegin()</strong></a> – Vektördeki son elemana işaret eden bir ters Iterator döndürür (ters başlangıç). Son elemandan ilk elemana doğru hareket eder.</li></ol><ol type="1" id="cf93df21-fc71-42c3-973a-65407b8a3b4b" class="numbered-list" start="4"><li><a href="https://www.geeksforgeeks.org/vector-rbegin-and-rend-function-in-c-stl/"><strong>rend()</strong></a> – Vektördeki ilk elemandan önceki teorik elemana işaret eden bir ters Iterator döndürür (ters uç olarak kabul edilir)</li></ol><ol type="1" id="371dc318-af27-4503-b3d5-7c2afd56ab9f" class="numbered-list" start="5"><li><a href="https://www.geeksforgeeks.org/vector-cbegin-vector-cend-c-stl/"><strong>cbegin()</strong></a> – Vektördeki ilk öğeye işaret eden sabit(constant) bir Iterator döndürür.</li></ol><ol type="1" id="a0ed2d79-f824-475c-adbc-20ecb505f85f" class="numbered-list" start="6"><li><a href="https://www.geeksforgeeks.org/vector-cbegin-vector-cend-c-stl/"><strong>cend()</strong></a> – bir vektördeki son öğeden sonraki hipotetik konumu işaret eden bir sabit (constant) iterator döndürür. (Hipotetik : gerçekte var olmayan veya gerçekleşme ihtimali olan ancak kesin olmayan bir durumu veya durumun sonucunu ifade eder. Kısaca vektörün son elemanından sonraki boş yeri işaret ediyor.)</li></ol><ol type="1" id="65dcb63d-1270-45d4-bc9d-3b0c15997f7f" class="numbered-list" start="7"><li><a href="https://www.geeksforgeeks.org/vectorcrend-vectorcrbegin-examples/"><strong>crbegin()</strong></a> – Vektördeki son elemana işaret eden sabit (constant) bir ters iterator döndürür (ters başlangıç). Son elemandan ilk elemana doğru hareket eder</li></ol><ol type="1" id="87f5860e-17e8-43c1-918d-a926d70b42f8" class="numbered-list" start="8"><li><a href="https://www.geeksforgeeks.org/vectorcrend-vectorcrbegin-examples/"><strong>crend()</strong></a> –  Vektördeki ilk elemandan önceki teorik elemana işaret eden sabit (constant) bir ters iterator döndürür (ters uç olarak kabul edilir).</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="cd45be56-e5d6-49f9-ba8a-2a59719850f6" class="code"><code class="language-C++">#include &lt;iostream&gt; 
+#include &lt;vector&gt; 
+using namespace std; 
+
+int main() 
+{ 
+	vector&lt;int&gt; g1; 
+
+	for (int i = 1; i &lt;= 5; i++) 
+		g1.push_back(i); 
+
+	cout &lt;&lt; &quot;Output of begin and end: &quot;; 
+	for (auto i = g1.begin(); i != g1.end(); ++i) 
+		cout &lt;&lt; *i &lt;&lt; &quot; &quot;; 
+
+	cout &lt;&lt; &quot;\nOutput of cbegin and cend: &quot;; 
+	for (auto i = g1.cbegin(); i != g1.cend(); ++i) 
+		cout &lt;&lt; *i &lt;&lt; &quot; &quot;; 
+
+	cout &lt;&lt; &quot;\nOutput of rbegin and rend: &quot;; 
+	for (auto ir = g1.rbegin(); ir != g1.rend(); ++ir) 
+		cout &lt;&lt; *ir &lt;&lt; &quot; &quot;; 
+
+	cout &lt;&lt; &quot;\nOutput of crbegin and crend : &quot;; 
+	for (auto ir = g1.crbegin(); ir != g1.crend(); ++ir) 
+		cout &lt;&lt; *ir &lt;&lt; &quot; &quot;; 
+
+	return 0; 
+} </code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7b991f91-39ff-4acf-8e91-7f8eb73a49cd"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Buradaki auto kelimesi c++11 sonrasında gelen bir key dir onun yerine std::vector&lt;int&gt;::iterator i de kullanılabilir.</div></figure><p id="bb1f0449-ecc9-436f-8fbd-c0acf9eb3cbc" class="">
+</p></details></li></ul><ul id="7231e59a-d7eb-40c5-bcbe-59a82554ef25" class="toggle"><li><details open=""><summary><strong>Capacity/Size (Kapasite/Boyut) Üye Fonksiyonları</strong></summary><ol type="1" id="e14b85f0-5f40-4683-b930-8e7a03062f35" class="numbered-list" start="1"><li><a href="https://www.geeksforgeeks.org/vectorempty-vectorsize-c-stl/"><strong>size()</strong></a> – Vector içerisinde ki eleman sayısını döndürür.</li></ol><ol type="1" id="2fa4f097-da5c-4f78-9a43-92c8892b54e4" class="numbered-list" start="2"><li><a href="https://www.geeksforgeeks.org/vector-max_size-function-in-c-stl/"><strong>max_size()</strong></a> – Vektörün tutabileceği maksimum eleman sayısını döndürür.</li></ol><ol type="1" id="615cdab0-91af-4aa7-a0a9-0e56065f7472" class="numbered-list" start="3"><li><a href="https://www.geeksforgeeks.org/vector-capacity-function-in-c-stl/"><strong>capacity()</strong></a> – Eleman sayısı olarak ifade edilen vektöre ayrılmış depolama alanının boyutunu döndürür.</li></ol><ol type="1" id="05caa3be-4099-4ceb-9fc4-833cc0621e0d" class="numbered-list" start="4"><li><a href="https://www.geeksforgeeks.org/vector-resize-c-stl/"><strong>resize(n)</strong></a> – Container’ı &#x27;n&#x27; öğe içerecek şekilde yeniden boyutlandırır.</li></ol><ol type="1" id="34c28ad5-0578-4708-8ce3-e15af8b2ec03" class="numbered-list" start="5"><li><a href="https://www.geeksforgeeks.org/vectorempty-vectorsize-c-stl/"><strong>empty()</strong></a> – Container’ın boş olup olmadığını döndürür.</li></ol><ol type="1" id="62b0a135-3508-40fd-b1a8-168b86aa36cf" class="numbered-list" start="6"><li><a href="https://www.geeksforgeeks.org/vector-shrink_to_fit-function-in-c-stl/"><strong>shrink_to_fit()</strong></a> – Container’ın kapasitesini boyutuna uyacak şekilde azaltır ve kapasitenin ötesindeki tüm öğeleri yok eder.</li></ol><ol type="1" id="292995c9-330f-4a73-871e-3bcc969f9b72" class="numbered-list" start="7"><li><a href="https://www.geeksforgeeks.org/using-stdvectorreserve-whenever-possible/"><strong>reserve() </strong></a>– Vektör kapasitesinin en az n eleman içerecek kadar olmasını ister.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0e867a80-b489-47d0-b536-69ef9b9756b5" class="code"><code class="language-C++">#include &lt;iostream&gt; 
+#include &lt;vector&gt; 
+
+using namespace std; 
+
+int main() 
+{ 
+	vector&lt;int&gt; g1; 
+
+	for (int i = 1; i &lt;= 5; i++) 
+		g1.push_back(i); 
+
+	cout &lt;&lt; &quot;Size : &quot; &lt;&lt; g1.size(); 
+	cout &lt;&lt; &quot;\nCapacity : &quot; &lt;&lt; g1.capacity(); 
+	cout &lt;&lt; &quot;\nMax_Size : &quot; &lt;&lt; g1.max_size(); 
+
+	// resizes the vector size to 4 
+	g1.resize(4); 
+
+	// prints the vector size after resize() 
+	cout &lt;&lt; &quot;\nSize : &quot; &lt;&lt; g1.size(); 
+
+	// checks if the vector is empty or not 
+	if (g1.empty() == false) 
+		cout &lt;&lt; &quot;\nVector is not empty&quot;; 
+	else
+		cout &lt;&lt; &quot;\nVector is empty&quot;; 
+
+	// Shrinks the vector 
+	g1.shrink_to_fit(); 
+	cout &lt;&lt; &quot;\nVector elements are: &quot;; 
+	for (auto it = g1.begin(); it != g1.end(); it++) 
+		cout &lt;&lt; *it &lt;&lt; &quot; &quot;; 
+
+	return 0; 
+} </code></pre></details></li></ul><ul id="4e0726ac-0a02-419a-a8b8-c9dc204b4196" class="toggle"><li><details open=""><summary><strong>Element access (Öğe erişimi) Üye Fonksiyonları</strong></summary><ol type="1" id="71e3f37e-07bf-4513-b4e7-b0d2f1c60a14" class="numbered-list" start="1"><li>referans operatörü [g] - Vektörde &#x27;g&#x27; konumundaki elemana bir referans döndürü</li></ol><ol type="1" id="2d10d700-53fa-4a55-8b58-ea58f0bced42" class="numbered-list" start="2"><li>at(g) - Vektörde &#x27;g&#x27; konumundaki elemana bir referans döndürür</li></ol><ol type="1" id="d304a8b9-2d0a-42e8-8d08-a0982131266b" class="numbered-list" start="3"><li>front() - Vektördeki ilk elemana bir referans döndürür</li></ol><ol type="1" id="eb80e288-5b91-4a06-a76a-b2b9075e4731" class="numbered-list" start="4"><li>back() - Vektördeki son elemana bir referans döndürür</li></ol><ol type="1" id="cd270ad1-7316-4b4b-aa4d-c3e9221a1a75" class="numbered-list" start="5"><li>data() - Sahip olunan öğeleri saklamak için vektör tarafından dahili olarak kullanılan bellek dizisine doğrudan bir işaretçi döndürür.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d78dec89-2217-4329-a6a0-e52964862141" class="code"><code class="language-C++">#include &lt;vector&gt;
+#include &lt;iostream&gt;
+using namespace std; 
+
+int main() 
+{ 
+	vector&lt;int&gt; g1; 
+
+	for (int i = 1; i &lt;= 10; i++) 
+		g1.push_back(i * 10); 
+
+	cout &lt;&lt; &quot;\nReference operator [g] : g1[2] = &quot; &lt;&lt; g1[2]; 
+
+	cout &lt;&lt; &quot;\nat : g1.at(4) = &quot; &lt;&lt; g1.at(4); 
+
+	cout &lt;&lt; &quot;\nfront() : g1.front() = &quot; &lt;&lt; g1.front(); 
+
+	cout &lt;&lt; &quot;\nback() : g1.back() = &quot; &lt;&lt; g1.back(); 
+
+	// pointer to the first element 
+	int* pos = g1.data(); 
+
+	cout &lt;&lt; &quot;\nThe first element is &quot; &lt;&lt; *pos; 
+	return 0; 
+} </code></pre><p id="cc95a5a8-1dc7-4d61-9a40-b7cd4c9eaa44" class="">
+</p></details></li></ul><ul id="e04d52e9-d54c-474d-a1fc-cf49ef3f1a54" class="toggle"><li><details open=""><summary><strong>Modifiers (Değiştirici ve düzenleyici) Üye Fonksiyonları</strong></summary><ol type="1" id="0bd9df79-eef7-4cb7-ada2-649aadf5d412" class="numbered-list" start="1"><li><a href="https://www.geeksforgeeks.org/vector-assign-in-c-stl/"><strong>assign() </strong></a>– Vektör elemanlarına eskilerini değiştirerek yeni değer atar. (x kadar yere, z değerini atar.)</li></ol><ol type="1" id="669af7eb-ff4f-4d56-8911-7a9031089b64" class="numbered-list" start="2"><li><a href="https://www.geeksforgeeks.org/vectorpush_back-vectorpop_back-c-stl/"><strong>push_back()</strong></a> – Vector sonuna bir yeni eleman ekler.</li></ol><ol type="1" id="f0b10a6f-66a4-46bb-8b58-7441204e727e" class="numbered-list" start="3"><li><a href="https://www.geeksforgeeks.org/vectorpush_back-vectorpop_back-c-stl/"><strong>pop_back()</strong></a> – Vectorun son elemanını siler.</li></ol><ol type="1" id="620d7c33-b446-46cb-8267-f1cb9890cf88" class="numbered-list" start="4"><li><a href="https://www.geeksforgeeks.org/vector-insert-function-in-c-stl/"><strong>insert()</strong></a> – Belirlenen bir yere yeni bir eleman ekler.</li></ol><ol type="1" id="0582622f-9e2f-4c9f-941d-78fdd19d652a" class="numbered-list" start="5"><li><a href="https://www.geeksforgeeks.org/vectorclear-vectorerase-c-stl/"><strong>erase()</strong></a> –  Bir container’da belirtilen konum veya aralıktaki elemanları silmek için kullanılır.</li></ol><ol type="1" id="b32cba7a-6f53-48b4-a14d-4772edcb2482" class="numbered-list" start="6"><li><a href="https://www.geeksforgeeks.org/vectorat-vectorswap-c-stl/"><strong>swap()</strong></a> – Bir vektörün içeriğini aynı tipteki başka bir vektörle değiştirmek için kullanılır. Array deki swapten farklı olarak boyutlar aynı olmak zorunda değildir farklı olabilir.</li></ol><ol type="1" id="e926c295-962e-48f3-a05a-319a79bdd71a" class="numbered-list" start="7"><li><a href="https://www.geeksforgeeks.org/vectorclear-vectorerase-c-stl/"><strong>clear()</strong></a> – Vektor içerisinde ki tüm elemanları siler.</li></ol><ol type="1" id="44e7e1d0-c34d-41e1-81c2-82cceb0db7ed" class="numbered-list" start="8"><li><a href="https://www.geeksforgeeks.org/vector-emplace-function-in-c-stl/"><strong>emplace()</strong></a> – Konumuna yeni eleman ekleyerek container’ı genişletir</li></ol><ol type="1" id="2eef84a0-f695-4709-980d-e15d107ca488" class="numbered-list" start="9"><li><a href="https://www.geeksforgeeks.org/vectoremplace_back-c-stl/"><strong>emplace_back()</strong></a> – Vektör container’ına yeni bir eleman eklemek için kullanılır, yeni eleman vektörün sonuna eklenir.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2b7b6a72-d80d-4b92-b69e-1833f0a6cece" class="code"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;vector&gt; 
+using namespace std; 
+
+int main() 
+{ 
+	// Assign vector 
+	vector&lt;int&gt; v; 
+
+	// fill the vector with 10 five times 
+	v.assign(5, 10); 
+
+	cout &lt;&lt; &quot;The vector elements are: &quot;; 
+	for (int i = 0; i &lt; v.size(); i++) 
+		cout &lt;&lt; v[i] &lt;&lt; &quot; &quot;; 
+
+	// inserts 15 to the last position 
+	v.push_back(15); 
+	int n = v.size(); 
+	cout &lt;&lt; &quot;\nThe last element is: &quot; &lt;&lt; v[n - 1]; 
+
+	// removes last element 
+	v.pop_back(); 
+
+	// prints the vector 
+	cout &lt;&lt; &quot;\nThe vector elements are: &quot;; 
+	for (int i = 0; i &lt; v.size(); i++) 
+		cout &lt;&lt; v[i] &lt;&lt; &quot; &quot;; 
+
+	// inserts 5 at the beginning 
+	v.insert(v.begin(), 5); 
+
+	cout &lt;&lt; &quot;\nThe first element is: &quot; &lt;&lt; v[0]; 
+
+	// removes the first element 
+	v.erase(v.begin()); 
+
+	cout &lt;&lt; &quot;\nThe first element is: &quot; &lt;&lt; v[0]; 
+
+	// inserts at the beginning 
+	v.emplace(v.begin(), 5); 
+	cout &lt;&lt; &quot;\nThe first element is: &quot; &lt;&lt; v[0]; 
+
+	// Inserts 20 at the end 
+	v.emplace_back(20); 
+	n = v.size(); 
+	cout &lt;&lt; &quot;\nThe last element is: &quot; &lt;&lt; v[n - 1]; 
+
+	// erases the vector 
+	v.clear(); 
+	cout &lt;&lt; &quot;\nVector size after clear(): &quot; &lt;&lt; v.size(); 
+
+	// two vector to perform swap 
+	vector&lt;int&gt; v1, v2; 
+	v1.push_back(1); 
+	v1.push_back(2); 
+	v2.push_back(3); 
+	v2.push_back(4); 
+
+	cout &lt;&lt; &quot;\n\nVector 1: &quot;; 
+	for (int i = 0; i &lt; v1.size(); i++) 
+		cout &lt;&lt; v1[i] &lt;&lt; &quot; &quot;; 
+
+	cout &lt;&lt; &quot;\nVector 2: &quot;; 
+	for (int i = 0; i &lt; v2.size(); i++) 
+		cout &lt;&lt; v2[i] &lt;&lt; &quot; &quot;; 
+
+	// Swaps v1 and v2 
+	v1.swap(v2); 
+
+	cout &lt;&lt; &quot;\nAfter Swap \nVector 1: &quot;; 
+	for (int i = 0; i &lt; v1.size(); i++) 
+		cout &lt;&lt; v1[i] &lt;&lt; &quot; &quot;; 
+
+	cout &lt;&lt; &quot;\nVector 2: &quot;; 
+	for (int i = 0; i &lt; v2.size(); i++) 
+		cout &lt;&lt; v2[i] &lt;&lt; &quot; &quot;; 
+} </code></pre></details></li></ul><p id="846a215f-b5ac-4979-ad26-0026e0ff513d" class="">
+</p><h3 id="bdceefb0-a989-48db-993b-5c72a1fd0988" class=""><strong>Vektörler üzerinde çeşitli işlemler yapmak için zaman karmaşıklığı :</strong></h3><ul id="91d44df0-c583-4506-bc10-051189707733" class="bulleted-list"><li style="list-style-type:disc">Rastgele erişim - sabit O(1)</li></ul><ul id="9d452bcb-a7b3-4873-ad82-083a84c4be91" class="bulleted-list"><li style="list-style-type:disc">Sona eleman ekleme veya çıkarma - sabit O(1)</li></ul><ul id="1d350bbf-b446-4cc3-ad77-e0504ef616bd" class="bulleted-list"><li style="list-style-type:disc">Eleman ekleme veya çıkarma - vektörün sonuna olan mesafede doğrusal O(N)</li></ul><ul id="ab0e19b6-ea8f-4e1d-9c44-4f8cd53525c0" class="bulleted-list"><li style="list-style-type:disc">Boyutun bilinmesi - sabit O(1)</li></ul><ul id="b72cbd80-8e09-45a1-8745-694e8740393f" class="bulleted-list"><li style="list-style-type:disc">Vektörü yeniden boyutlandırma- Doğrusal O(N)</li></ul><p id="292c9380-937b-4051-bbe4-2fe461890716" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="07344dc8-d963-4610-9e20-3d3b8bcb6955"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-red">Dip not</mark> : Vector kapasitesi dolduğunda ve yeni eleman eklemek istediğimizde size 2 katına çıkar ve bazen bu durum performans da kötü sonuçlar vereceğinden tercih dışı kalabiliyor vectorler. Genellikle eleman sayısı bilinmiyorsa listeler tercih ediliyor.</div></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
